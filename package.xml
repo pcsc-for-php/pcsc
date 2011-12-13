@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>pcsc</name>
+ <channel>pecl.php.net</channel>
+ <summary>An extension for PHP using the winscard PC/SC API</summary>
+ <description>This is an extension for using PC/SC based smart cards with PHP. 
+It is a wrapper to the wonderfull and free project PCSC-Lite which is the 
+middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is 
+compatible to the winscard API it should be possible to compile this extension 
+using a Windows® operating system. Currently I only take focus on Linux 
+environments.
+ </description>
+ <lead>
+  <name>Johannes Findeisen</name>
+  <user>hanez</user>
+  <email>you@hanez.org</email>
+  <active>yes</active>
+ </lead>
+ <date>2011-12-13</date>
+ <time>00:14:10</time>
+ <version>
+  <release>0.1</release>
+  <api>0.1</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>Initial release</notes>
+ <contents>
+  <dir name="/">
+   <file name="COPYING" role="doc" />
+   <file name="CREDITS" role="doc" />
+   <file name="config.m4" role="src" />
+   <file name="pcsc.c" role="src" />
+   <file name="php_pcsc.h" role="src" />
+   <file name="README" role="doc" />
+   <file name="TODO" role="doc" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>pcsc</providesextension>
+ <extsrcrelease />
+</package>
+
