@@ -10,7 +10,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
 It is a wrapper to the wonderfull and free project PCSC-Lite which is the 
 middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is 
 compatible to the winscard API it should be possible to compile this extension 
-using a Windows® operating system. Currently I only take focus on Linux 
+using a Windows operating system. Currently I only take focus on Linux 
 environments.
  </description>
  <lead>
@@ -22,8 +22,8 @@ environments.
  <date>2011-12-13</date>
  <time>00:14:10</time>
  <version>
-  <release>0.1</release>
-  <api>0.1</api>
+  <release>0.1.1</release>
+  <api>0.1.1</api>
  </version>
  <stability>
   <release>alpha</release>

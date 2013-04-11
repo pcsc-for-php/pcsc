@@ -37,7 +37,7 @@
  *
  * Every user visible function must have an entry in pcsc_functions[].
  */
-function_entry pcsc_functions[] = {
+zend_function_entry pcsc_functions[] = {
   PHP_FE(scard_establish_context, NULL)
   PHP_FE(scard_release_context, NULL)
   PHP_FE(scard_is_valid_context, NULL)
