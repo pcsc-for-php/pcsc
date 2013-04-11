@@ -30,7 +30,7 @@ environments.
   <api>alpha</api>
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
- <notes>Initial release</notes>
+ <notes>Fixed compile error on >= PHP5.4 and added w32 support</notes>
  <contents>
   <dir name="/">
    <file name="COPYING" role="doc" />
