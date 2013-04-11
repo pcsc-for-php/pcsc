@@ -19,11 +19,11 @@ environments.
   <email>you@hanez.org</email>
   <active>yes</active>
  </lead>
- <date>2011-12-13</date>
- <time>00:14:10</time>
+ <date>2013-04-11</date>
+ <time>20:10:30</time>
  <version>
-  <release>0.1.1</release>
-  <api>0.1.1</api>
+  <release>0.2</release>
+  <api>0.2</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -36,6 +36,7 @@ environments.
    <file name="COPYING" role="doc" />
    <file name="CREDITS" role="doc" />
    <file name="config.m4" role="src" />
+   <file name="config.w32" role="src" />
    <file name="pcsc.c" role="src" />
    <file name="php_pcsc.h" role="src" />
    <file name="README" role="doc" />
