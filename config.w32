@@ -1,0 +1,7 @@
+ARG_WITH("pcsc", "PC/SC Support", "no");
+if (PHP_PCSC != "no") {
+    // DEFINE("LIBS", "kernel32.lib ole32.lib user32.lib advapi32.lib shell32.lib ws2_32.lib Dnsapi.lib");
+    ADD_FLAG("LIBS","winscard.lib");
+    EXTENSION("pcsc", "pcsc.c", $ext_shared);
+    PHP_INSTALL_HEADERS([php_pcsc.h]);
+}

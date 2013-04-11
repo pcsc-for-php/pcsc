@@ -25,8 +25,10 @@
 #include "ext/standard/info.h"
 #include "php_pcsc.h"
 
-#include <PCSC/winscard.h>
+#include <winscard.h>
+#ifndef PHP_WIN32
 #include <PCSC/pcsclite.h>
+#endif
 
 #ifndef FALSE
 #define FALSE 0
