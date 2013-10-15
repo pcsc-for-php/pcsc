@@ -68,7 +68,7 @@ zend_module_entry pcsc_module_entry = {
   NULL,
   PHP_MINFO(pcsc),
 #if ZEND_MODULE_API_NO >= 20010901
-  "0.0.1", /* Replace with version number for your extension */
+  PHP_PCSC_VERSION,
 #endif
   STANDARD_MODULE_PROPERTIES
 };
