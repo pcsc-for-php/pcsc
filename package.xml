@@ -19,8 +19,8 @@ environments.
   <email>you@hanez.org</email>
   <active>yes</active>
  </lead>
- <date>2013-04-11</date>
- <time>20:10:30</time>
+ <date>2014-02-12</date>
+ <time>18:10:00</time>
  <version>
   <release>0.3</release>
   <api>0.3</api>
@@ -30,7 +30,7 @@ environments.
   <api>alpha</api>
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
- <notes>Fixed compile error on >= PHP5.4 and added w32 support</notes>
+ <notes>Fix w32 build, fix compiler warnings, use zval resource instead of LONG for handles</notes>
  <contents>
   <dir name="/">
    <file name="COPYING" role="doc" />
