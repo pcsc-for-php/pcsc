@@ -29,11 +29,22 @@ PHP_FUNCTION(scard_connect);
 PHP_FUNCTION(scard_disconnect);
 PHP_FUNCTION(scard_status);
 PHP_FUNCTION(scard_transmit);
-//PHP_FUNCTION(scard_cancel);
+PHP_FUNCTION(scard_last_errno);
+PHP_FUNCTION(scard_errstr);
 
 #define PHP_PCSC_CTX_RES_NAME "PC/SC Context"
 #define PHP_PCSC_CONN_RES_NAME "PC/SC Connection"
 
-static char* php_pcsc_error_to_string(LONG dwRC);
+static char* php_pcsc_error_to_string(DWORD dwRC);
+
+ZEND_BEGIN_MODULE_GLOBALS(pcsc)
+	DWORD last_errno;
+ZEND_END_MODULE_GLOBALS(pcsc)
+
+#ifdef ZTS
+#define PCSC_G(v) TSRMG(pcsc_globals_id,zend_pcsc_globals*,v)
+#else
+#define PCSC_G(v) (pcsc_globals.v)
+#endif
 
 #endif	/* PHP_PCSC_H */
