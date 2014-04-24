@@ -7,11 +7,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <channel>pecl.php.net</channel>
  <summary>An extension for PHP using the winscard PC/SC API</summary>
  <description>This is an extension for using PC/SC based smart cards with PHP. 
-It is a wrapper to the wonderfull and free project PCSC-Lite which is the 
-middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is 
-compatible to the winscard API it should be possible to compile this extension 
-using a Windows operating system. Currently I only take focus on Linux 
-environments.
+It is a wrapper to the wonderful and free project PCSC-Lite which is the 
+middleware to access a smart card using SCard API (PC/SC). Both Linux and
+Windows are supported.
  </description>
  <lead>
   <name>Johannes Findeisen</name>
@@ -19,8 +17,8 @@ environments.
   <email>you@hanez.org</email>
   <active>yes</active>
  </lead>
- <date>2014-02-12</date>
- <time>18:10:00</time>
+ <date>2014-04-24</date>
+ <time>02:30:00</time>
  <version>
   <release>0.3</release>
   <api>0.3</api>
