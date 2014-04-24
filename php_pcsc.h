@@ -16,6 +16,11 @@ extern zend_module_entry pcsc_module_entry;
 #include "TSRM.h"
 #endif
 
+#include <winscard.h>
+#ifndef PHP_WIN32
+#include <PCSC/pcsclite.h>
+#endif
+
 PHP_MINIT_FUNCTION(pcsc);
 PHP_MSHUTDOWN_FUNCTION(pcsc);
 PHP_MINFO_FUNCTION(pcsc);

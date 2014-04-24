@@ -27,10 +27,6 @@
 
 ZEND_DECLARE_MODULE_GLOBALS(pcsc);
 
-#include <winscard.h>
-#ifndef PHP_WIN32
-#include <PCSC/pcsclite.h>
-#endif
 
 #ifndef FALSE
 #define FALSE 0
@@ -232,7 +228,7 @@ PHP_MINIT_FUNCTION(pcsc)
   #ifdef ZTS
   ts_allocate_id(&pcsc_globals_id,sizeof(zend_pcsc_globals),(ts_allocate_ctor)php_pcsc_globals_ctor, NULL);
   #else
-  php_pcsc_globals_ctor(&pcsc_globals TRSMLS_CC);
+  php_pcsc_globals_ctor(&pcsc_globals TSRMLS_CC);
   #endif
 
   return SUCCESS;
@@ -302,7 +298,13 @@ static char* php_pcsc_error_to_string(DWORD dwRC) {
 		case SCARD_E_UNKNOWN_CARD: return "SCARD_E_UNKNOWN_CARD";
 		case SCARD_E_UNKNOWN_READER: return "SCARD_E_UNKNOWN_READER";
 		case SCARD_E_UNKNOWN_RES_MNG: return "SCARD_E_UNKNOWN_RES_MNG";
-		case SCARD_E_UNSUPPORTED_FEATURE: return "SCARD_E_UNSUPPORTED_FEATURE";
+/* apparently E_UNEXPECTED and E_UNSUPPORTED are defined 
+   by a buggy header file on Linux, causing a "double used constant"
+   error. Just leave this out on Linux, then.
+*/
+#ifdef PHP_WIN32
+                case SCARD_E_UNSUPPORTED_FEATURE: return "SCARD_E_UNSUPPORTED_FEATURE";
+#endif
 		case SCARD_E_WRITE_TOO_MANY: return "SCARD_E_WRITE_TOO_MANY";
 		case SCARD_F_COMM_ERROR: return "SCARD_E_WRITE_TOO_MANY";
 		case SCARD_F_INTERNAL_ERROR: return "SCARD_F_INTERNAL_ERROR";
@@ -311,9 +313,15 @@ static char* php_pcsc_error_to_string(DWORD dwRC) {
 		case SCARD_P_SHUTDOWN: return "SCARD_P_SHUTDOWN";
 		case SCARD_S_SUCCESS: return "SCARD_S_SUCCESS";
 		case SCARD_W_CANCELLED_BY_USER: return "SCARD_W_CANCELLED_BY_USER";
+#ifdef SCARD_W_CACHE_ITEM_NOT_FOUND
 		case SCARD_W_CACHE_ITEM_NOT_FOUND: return "SCARD_W_CACHE_ITEM_NOT_FOUND";
+#endif
+#ifdef SCARD_W_CACHE_ITEM_STALE
 		case SCARD_W_CACHE_ITEM_STALE: return "SCARD_W_CACHE_ITEM_STALE";
+#endif
+#ifdef SCARD_W_CACHE_ITEM_TOO_BIG
 		case SCARD_W_CACHE_ITEM_TOO_BIG: return "SCARD_W_CACHE_ITEM_TOO_BIG";
+#endif
 		case SCARD_W_CARD_NOT_AUTHENTICATED: return "SCARD_W_CARD_NOT_AUTHENTICATED";
 		case SCARD_W_CHV_BLOCKED: return "SCARD_W_CHV_BLOCKED";
 		case SCARD_W_EOF: return "SCARD_W_EOF";
