@@ -33,7 +33,7 @@ if test "$PHP_PCSC" != "no"; then
   
   dnl Finally, tell the build system about the extension and what files are needed
   PHP_NEW_EXTENSION(pcsc, pcsc.c, $ext_shared)
-  PHP_INSTALL_HEADERS([php_pcsc.h])
+  PHP_INSTALL_HEADERS([ext/pcsc], [php_pcsc.h])
   PHP_SUBST(PCSC_SHARED_LIBADD)
 fi
 
