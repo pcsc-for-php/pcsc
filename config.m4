@@ -29,7 +29,7 @@ if test "$PHP_PCSC" != "no"; then
   AC_MSG_RESULT($PCSC_DIR)
   PHP_ADD_INCLUDE($PCSC_DIR/include/PCSC/)
   dnl PHP_EVAL_LIBLINE($PCSC_LIBS, PCSC_SHARED_LIBADD)
-  PHP_ADD_LIBRARY_WITH_PATH(pcsclite, "$PCSC_DIR/lib/", PCSC_SHARED_LIBADD)
+  PHP_ADD_LIBRARY_WITH_PATH(pcsclite, "$PCSC_DIR/$PHP_LIBDIR", PCSC_SHARED_LIBADD)
   
   dnl Finally, tell the build system about the extension and what files are needed
   PHP_NEW_EXTENSION(pcsc, pcsc.c, $ext_shared)
