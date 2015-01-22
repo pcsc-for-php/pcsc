@@ -21,14 +21,14 @@ Windows are supported.
  <time>23:02:23</time>
  <version>
   <release>0.3.1</release>
-  <api>0.3</api>
+  <api>0.3.1</api>
  </version>
  <stability>
   <release>alpha</release>
   <api>alpha</api>
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
- <notes>Fix w32 build, fix compiler warnings, use zval resource instead of LONG for handles</notes>
+ <notes>Fixed bug to make the use of the T=0 protocol possible.</notes>
  <contents>
   <dir name="/">
    <file name="COPYING" role="doc" />
