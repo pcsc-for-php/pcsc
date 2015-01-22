@@ -1,7 +1,15 @@
-Some things that need to be done:
+Implement important missing PC/SC functions:
 
-- Find all leaks and fix them
-- Write all function documentation
-- Write complete API documentation
-- ...
+ - SCardControl(), 
+   SCardGetStatusChange(), 
+   SCardBeginTransaction(), 
+   SCardEndTransaction()
 
+Implement less important missing PC/SC functions:
+
+ - SCardGetAttrib(), 
+   SCardSetAttrib(), 
+   SCardListReaderGroups(),
+   SCardReconnect
+ 
+Write complete API documentation
