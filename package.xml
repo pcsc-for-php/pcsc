@@ -17,10 +17,10 @@ Windows are supported.
   <email>you@hanez.org</email>
   <active>yes</active>
  </lead>
- <date>2014-04-24</date>
- <time>02:30:00</time>
+ <date>2015-01-22</date>
+ <time>23:02:23</time>
  <version>
-  <release>0.3</release>
+  <release>0.3.1</release>
   <api>0.3</api>
  </version>
  <stability>
