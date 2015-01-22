@@ -34,7 +34,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <file name="config.w32" role="src" />
    <file name="pcsc.c" role="src" />
    <file name="php_pcsc.h" role="src" />
-   <file name="README" role="doc" />
    <file name="TODO" role="doc" />
   </dir> <!-- / -->
  </contents>
