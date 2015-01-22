@@ -33,6 +33,7 @@ PHP_FUNCTION(scard_connect);
 //PHP_FUNCTION(scard_reconnect);
 PHP_FUNCTION(scard_disconnect);
 PHP_FUNCTION(scard_status);
+//PHP_FUNCTION(scard_get_status_change);
 PHP_FUNCTION(scard_transmit);
 PHP_FUNCTION(scard_last_errno);
 PHP_FUNCTION(scard_errstr);

@@ -34,11 +34,11 @@ ZEND_DECLARE_MODULE_GLOBALS(pcsc);
 #endif
 
 /* arg info for scard_connect (accepts an optional compile-time reference parameter) */
-ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_connect_arginfo,0,0,2)
-	ZEND_ARG_INFO(0,context)
-	ZEND_ARG_INFO(0,reader_name)
-	ZEND_ARG_INFO(0,preferred_protocol)
-	ZEND_ARG_INFO(1,active_protocol)
+ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_connect_arginfo, 0, 0, 2)
+	ZEND_ARG_INFO(0, context)
+	ZEND_ARG_INFO(0, reader_name)
+	ZEND_ARG_INFO(0, preferred_protocol)
+	ZEND_ARG_INFO(1, active_protocol)
 ZEND_END_ARG_INFO()
 
 /* {{{ pcsc_functions[]
@@ -55,6 +55,7 @@ zend_function_entry pcsc_functions[] = {
   PHP_FE(scard_disconnect, NULL)
   PHP_FE(scard_transmit, NULL)
   PHP_FE(scard_status, NULL)
+  //PHP_FE(scard_get_status_change, NULL)
   PHP_FE(scard_last_errno, NULL)
   PHP_FE(scard_errstr, NULL)
   {NULL, NULL, NULL}
@@ -96,13 +97,13 @@ static void php_pcsc_ctx_res_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC) {
 	context=(SCARDCONTEXT)rsrc->ptr;
 	rc = SCardIsValidContext(context);
 	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "PC/SC context dtor: SCardIsValidContext returned %s (0x%x)",php_pcsc_error_to_string(rc),rc);
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "PC/SC context dtor: SCardIsValidContext returned %s (0x%x)", php_pcsc_error_to_string(rc), rc);
 		return;
 	}
 
 	rc = SCardReleaseContext(context);
 	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "PC/SC context dtor: SCardReleaseContext returned %s (0x%x)",php_pcsc_error_to_string(rc),rc);
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "PC/SC context dtor: SCardReleaseContext returned %s (0x%x)", php_pcsc_error_to_string(rc), rc);
 		return;
 	}
 	return;
@@ -121,7 +122,7 @@ static void php_pcsc_conn_res_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC) {
 	
 	rc = SCardDisconnect(hCard, SCARD_LEAVE_CARD);
 	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "PC/SC connection dtor: SCardDisconnect returned %s (0x%x)",php_pcsc_error_to_string(rc),rc);
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "PC/SC connection dtor: SCardDisconnect returned %s (0x%x)", php_pcsc_error_to_string(rc), rc);
 	}
 }
 
@@ -499,7 +500,7 @@ PHP_FUNCTION(scard_establish_context)
   rc = SCardEstablishContext(SCARD_SCOPE_SYSTEM, NULL, NULL, &scard_context);
   if (rc != SCARD_S_SUCCESS)
   {
-	PCSC_G(last_errno)=rc;
+	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
   
@@ -518,11 +519,11 @@ PHP_FUNCTION(scard_is_valid_context)
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &ctx_res) == FAILURE) {
     RETURN_NULL();
   }
-  ZEND_FETCH_RESOURCE(context,SCARDCONTEXT,&ctx_res,-1,PHP_PCSC_CTX_RES_NAME,le_pcsc_ctx_res);
+  ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
   
   rc = SCardIsValidContext(context);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno)=rc;
+	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
   RETURN_TRUE;
@@ -540,9 +541,9 @@ PHP_FUNCTION(scard_release_context)
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &ctx_res) == FAILURE) {
     RETURN_NULL();
   }
-  ZEND_FETCH_RESOURCE(context,SCARDCONTEXT,&ctx_res,-1,PHP_PCSC_CTX_RES_NAME,le_pcsc_ctx_res);
+  ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
 
-  zend_hash_index_del(&EG(regular_list),Z_RESVAL_P(ctx_res));
+  zend_hash_index_del(&EG(regular_list), Z_RESVAL_P(ctx_res));
   RETURN_TRUE;
 }
 /* }}} */
@@ -561,11 +562,11 @@ PHP_FUNCTION(scard_list_readers)
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &ctx_res) == FAILURE) {
     RETURN_NULL();
   }
-  ZEND_FETCH_RESOURCE(context,SCARDCONTEXT,&ctx_res,-1,PHP_PCSC_CTX_RES_NAME,le_pcsc_ctx_res);
+  ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
   
   rc = SCardListReaders(context, NULL, (char *) &strReaders, &dwLen);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno)=rc;
+	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
   
@@ -601,21 +602,21 @@ PHP_FUNCTION(scard_connect)
   int strReaderNameLen;
   
   MAKE_STD_ZVAL(current_protocol);
-  ZVAL_LONG(current_protocol,0);
+  ZVAL_LONG(current_protocol, 0);
   
-  if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs|lz", &ctx_res, &strReaderName, &strReaderNameLen, &dwPreferredProtocol,&current_protocol) == FAILURE) {
+  if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs|lz", &ctx_res, &strReaderName, &strReaderNameLen, &dwPreferredProtocol, &current_protocol) == FAILURE) {
     RETURN_NULL();
   }
-  ZEND_FETCH_RESOURCE(context,SCARDCONTEXT,&ctx_res,-1,PHP_PCSC_CTX_RES_NAME,le_pcsc_ctx_res);
+  ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
 
   rc = SCardConnect(context, strReaderName, SCARD_SHARE_SHARED, dwPreferredProtocol, &hCard, &dwCurrentProtocol);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno)=rc;
+	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
-  ZVAL_LONG(current_protocol,dwCurrentProtocol);
+  ZVAL_LONG(current_protocol, dwCurrentProtocol);
   
-  ZEND_REGISTER_RESOURCE(return_value,(void*)hCard,le_pcsc_conn_res);
+  ZEND_REGISTER_RESOURCE(return_value, (void*)hCard, le_pcsc_conn_res);
 }
 /* }}} */
 
@@ -631,11 +632,11 @@ PHP_FUNCTION(scard_disconnect)
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r|l", &conn_res, &dwDisposition) == FAILURE) {
     return;
   }
-  ZEND_FETCH_RESOURCE(hCard,SCARDHANDLE,&conn_res,-1,PHP_PCSC_CONN_RES_NAME,le_pcsc_conn_res);
+  ZEND_FETCH_RESOURCE(hCard, SCARDHANDLE, &conn_res, -1, PHP_PCSC_CONN_RES_NAME, le_pcsc_conn_res);
   
   rc = SCardDisconnect(hCard, dwDisposition);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno)=rc;
+	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
   RETURN_TRUE;
@@ -662,17 +663,17 @@ PHP_FUNCTION(scard_transmit)
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs", &conn_res, &apdu, &apduLen) == FAILURE) {
     return;
   }
-  ZEND_FETCH_RESOURCE(hCard,SCARDHANDLE,&conn_res,-1,PHP_PCSC_CONN_RES_NAME,le_pcsc_conn_res);
+  ZEND_FETCH_RESOURCE(hCard, SCARDHANDLE, &conn_res, -1, PHP_PCSC_CONN_RES_NAME, le_pcsc_conn_res);
 
   /* Are we in T=0 or T=1 ? Is the card powered? */
   rc = SCardStatus(hCard, NULL, NULL, &dwState, &dwProtocol, NULL, NULL);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno)=rc;
+	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
         
   if (!(dwState & SCARD_POWERED)) {
-	PCSC_G(last_errno)=SCARD_W_UNPOWERED_CARD;
+	PCSC_G(last_errno) = SCARD_W_UNPOWERED_CARD;
     RETURN_FALSE;
   }
   
@@ -696,7 +697,7 @@ PHP_FUNCTION(scard_transmit)
 
   rc = SCardTransmit(hCard, sendPci, sendBuffer, sendLen, recvPci, recvBuffer, &recvLen);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno)=rc;
+	PCSC_G(last_errno) = rc;
     efree(recvPci);
     efree(recvBuffer);
     efree(sendBuffer);
@@ -728,12 +729,12 @@ PHP_FUNCTION(scard_status)
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &conn_res) == FAILURE) {
     return;
   }
-  ZEND_FETCH_RESOURCE(hCard,SCARDHANDLE,&conn_res,-1,PHP_PCSC_CONN_RES_NAME,le_pcsc_conn_res);
+  ZEND_FETCH_RESOURCE(hCard, SCARDHANDLE, &conn_res, -1, PHP_PCSC_CONN_RES_NAME, le_pcsc_conn_res);
   
   atrLen = sizeof(atrBuffer);
   rc = SCardStatus(hCard, NULL, NULL, &dwState, &dwProtocol, atrBuffer, &atrLen);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno)=rc;
+	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
 
