@@ -590,7 +590,7 @@ PHP_FUNCTION(scard_list_readers)
    Return a handle to the card */
 PHP_FUNCTION(scard_connect)
 {
-  DWORD dwPreferredProtocol = SCARD_PROTOCOL_T1; 
+  DWORD dwPreferredProtocol = SCARD_PROTOCOL_T1|SCARD_PROTOCOL_T0; 
   DWORD dwCurrentProtocol;
   SCARDHANDLE hCard = 0;
   LONG rc = 0;
