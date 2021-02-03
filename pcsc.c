@@ -27,6 +27,11 @@
 
 ZEND_DECLARE_MODULE_GLOBALS(pcsc);
 
+/* Compatibility shims */
+#ifndef ZEND_FETCH_RESOURCE
+#define ZEND_FETCH_RESOURCE(res, stmt_type, stmt, stmt_id, resource_type_name, le_stmt) \
+	res = (stmt_type)zend_fetch_resource(Z_RES_P(*stmt),resource_type_name,le_stmt);
+#endif
 
 #ifndef FALSE
 #define FALSE 0
@@ -90,7 +95,7 @@ ZEND_GET_MODULE(pcsc)
 
 /* resource container: context */
 static int le_pcsc_ctx_res;
-static void php_pcsc_ctx_res_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC) {
+static void php_pcsc_ctx_res_dtor(zend_resource *rsrc TSRMLS_DC) {
 	SCARDCONTEXT context;
 	LONG rc=0;
 	
@@ -111,7 +116,7 @@ static void php_pcsc_ctx_res_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC) {
 
 /* resource container: connection */
 static int le_pcsc_conn_res;
-static void php_pcsc_conn_res_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC) {
+static void php_pcsc_conn_res_dtor(zend_resource *rsrc TSRMLS_DC) {
 	SCARDHANDLE hCard;
 	LONG rc;
 
@@ -504,7 +509,7 @@ PHP_FUNCTION(scard_establish_context)
     RETURN_FALSE;
   }
   
-  ZEND_REGISTER_RESOURCE(return_value,(void*)scard_context,le_pcsc_ctx_res);
+  RETURN_RES(zend_register_resource((void*)scard_context,le_pcsc_ctx_res));
 }
 /* }}} */
 
@@ -543,7 +548,7 @@ PHP_FUNCTION(scard_release_context)
   }
   ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
 
-  zend_hash_index_del(&EG(regular_list), Z_RESVAL_P(ctx_res));
+  zend_hash_index_del(&EG(regular_list), Z_RES_HANDLE_P(ctx_res));
   RETURN_TRUE;
 }
 /* }}} */
@@ -578,7 +583,7 @@ PHP_FUNCTION(scard_list_readers)
 
   ptrReader = strReaders;
   do {
-    add_next_index_string(return_value, ptrReader, TRUE);
+    add_next_index_string(return_value, ptrReader);
     ptrReader+= strlen(ptrReader);
     ptrReader++;
   } while (*ptrReader != '\0');
@@ -601,7 +606,7 @@ PHP_FUNCTION(scard_connect)
   char *strReaderName;
   int strReaderNameLen;
   
-  MAKE_STD_ZVAL(current_protocol);
+  current_protocol = (zval *)emalloc(sizeof(zval));
   ZVAL_LONG(current_protocol, 0);
   
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs|lz", &ctx_res, &strReaderName, &strReaderNameLen, &dwPreferredProtocol, &current_protocol) == FAILURE) {
@@ -616,7 +621,7 @@ PHP_FUNCTION(scard_connect)
   }
   ZVAL_LONG(current_protocol, dwCurrentProtocol);
   
-  ZEND_REGISTER_RESOURCE(return_value, (void*)hCard, le_pcsc_conn_res);
+  RETURN_RES(zend_register_resource((void*)hCard, le_pcsc_conn_res));
 }
 /* }}} */
 
@@ -706,7 +711,7 @@ PHP_FUNCTION(scard_transmit)
   efree(recvPci);
 
   /* Return the response */
-  RETVAL_STRING(e_bytes_to_hex(recvBuffer, recvLen), TRUE);
+  RETVAL_STRING(e_bytes_to_hex(recvBuffer, recvLen));
 
   /* Free local data */
   efree(recvBuffer);
@@ -761,13 +766,13 @@ PHP_FUNCTION(scard_status)
   switch (dwProtocol) {
     /* Maybe change to bool type here instead of add_assoc_long...? */
     case SCARD_PROTOCOL_RAW : add_assoc_long(return_value, "SCARD_PROTOCOL_RAW", 1);
-                              add_assoc_string(return_value, "PROTOCOL", "RAW", TRUE);
+                              add_assoc_string(return_value, "PROTOCOL", "RAW");
                               break;
     case SCARD_PROTOCOL_T0  : add_assoc_long(return_value, "SCARD_PROTOCOL_T0", 1);
-                              add_assoc_string(return_value, "PROTOCOL", "T=0", TRUE);
+                              add_assoc_string(return_value, "PROTOCOL", "T=0");
                               break;
     case SCARD_PROTOCOL_T1  : add_assoc_long(return_value, "SCARD_PROTOCOL_T1", 1);
-                              add_assoc_string(return_value, "PROTOCOL", "T=1", TRUE);
+                              add_assoc_string(return_value, "PROTOCOL", "T=1");
                               break;
     default                 : add_assoc_long(return_value, "PROTOCOL", dwProtocol);
   }
@@ -775,7 +780,7 @@ PHP_FUNCTION(scard_status)
   if (atrLen) {
     char *atrString;
     atrString = e_bytes_to_hex(atrBuffer, atrLen);
-    add_assoc_string(return_value, "ATR", atrString, TRUE);
+    add_assoc_string(return_value, "ATR", atrString);
     efree(atrString);
   }
 }
@@ -797,6 +802,6 @@ PHP_FUNCTION(scard_errstr)
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &in_errno) == FAILURE) {
     RETURN_NULL();
   }
-  RETURN_STRING(php_pcsc_error_to_string(in_errno),1);
+  RETURN_STRING(php_pcsc_error_to_string(in_errno));
 }
 /* }}} */
