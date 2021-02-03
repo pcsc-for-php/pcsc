@@ -14,10 +14,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>you@hanez.org</email>
   <active>yes</active>
  </lead>
- <date>2015-01-22</date>
- <time>23:02:23</time>
+ <developer>
+  <name>Calvin Buckley</name>
+  <user>calvinb</user>
+  <email>calvin@cmpct.info</email>
+  <active>yes</active>
+ </developer>
+ <date>2021-02-03</date>
+ <time>13:02:23</time>
  <version>
-  <release>0.3.1</release>
+  <release>0.4.0</release>
   <api>0.3.1</api>
  </version>
  <stability>
@@ -25,7 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <api>alpha</api>
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
- <notes>Fixed bug to make the use of the T=0 protocol possible.</notes>
+ <notes>Updated for PHP 7 compatibility.</notes>
  <contents>
   <dir name="/">
    <file name="COPYING" role="doc" />
@@ -40,7 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <dependencies>
   <required>
    <php>
-    <min>5.3</min>
+    <min>7.3</min>
    </php>
    <pearinstaller>
     <min>1.4.0b1</min>
