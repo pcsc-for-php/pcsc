@@ -596,7 +596,7 @@ PHP_FUNCTION(scard_list_readers)
    Return a handle to the card */
 PHP_FUNCTION(scard_connect)
 {
-  DWORD dwPreferredProtocol = SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1; 
+  DWORD dwPreferredProtocol = SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1;
   DWORD dwCurrentProtocol;
   SCARDHANDLE hCard = 0;
   LONG rc = 0;
@@ -604,13 +604,20 @@ PHP_FUNCTION(scard_connect)
   zval* current_protocol;
   SCARDCONTEXT context;
   char *strReaderName;
-  int strReaderNameLen;
+  size_t strReaderNameLen;
+  zend_long preferred_protocol;
   
-  current_protocol = (zval *)emalloc(sizeof(zval));
-  ZVAL_LONG(current_protocol, 0);
-  
-  if (zend_parse_parameters(ZEND_NUM_ARGS(), "rs|lz", &ctx_res, &strReaderName, &strReaderNameLen, &dwPreferredProtocol, &current_protocol) == FAILURE) {
+  current_protocol = NULL;
+  ctx_res = NULL;
+  if (zend_parse_parameters(ZEND_NUM_ARGS(), "rs|lz", &ctx_res, &strReaderName, &strReaderNameLen, &preferred_protocol, &current_protocol) == FAILURE) {
     RETURN_NULL();
+  }
+  if (current_protocol != NULL) {
+    ZVAL_LONG(current_protocol, 0);
+  }
+  /* if the third arg (preferred protocol override) was passed */
+  if (ZEND_NUM_ARGS() > 2) {
+    dwPreferredProtocol = (DWORD)preferred_protocol;
   }
   ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
 
@@ -619,7 +626,9 @@ PHP_FUNCTION(scard_connect)
 	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
-  ZVAL_LONG(current_protocol, dwCurrentProtocol);
+  if (current_protocol != NULL) {
+    ZVAL_LONG(current_protocol, dwCurrentProtocol);
+  }
   
   RETURN_RES(zend_register_resource((void*)hCard, le_pcsc_conn_res));
 }
@@ -629,7 +638,7 @@ PHP_FUNCTION(scard_connect)
    Close a card connection obtained with scard_connect */
 PHP_FUNCTION(scard_disconnect)
 {
-  DWORD dwDisposition = SCARD_EJECT_CARD;
+  zend_long dwDisposition = SCARD_EJECT_CARD;
   LONG rc;
   zval* conn_res;
   SCARDHANDLE hCard;
@@ -639,7 +648,7 @@ PHP_FUNCTION(scard_disconnect)
   }
   ZEND_FETCH_RESOURCE(hCard, SCARDHANDLE, &conn_res, -1, PHP_PCSC_CONN_RES_NAME, le_pcsc_conn_res);
   
-  rc = SCardDisconnect(hCard, dwDisposition);
+  rc = SCardDisconnect(hCard, (DWORD)dwDisposition);
   if (rc != SCARD_S_SUCCESS) {
 	PCSC_G(last_errno) = rc;
     RETURN_FALSE;
@@ -663,7 +672,7 @@ PHP_FUNCTION(scard_transmit)
   DWORD sendLen, recvLen;
   LONG rc;
   char *apdu;
-  int apduLen;
+  size_t apduLen;
   
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "rs", &conn_res, &apdu, &apduLen) == FAILURE) {
     return;
@@ -798,10 +807,10 @@ PHP_FUNCTION(scard_last_errno)
    Retrieve string name of error code */
 PHP_FUNCTION(scard_errstr)
 {
-  DWORD in_errno=0;
+  zend_long in_errno=0;
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "l", &in_errno) == FAILURE) {
     RETURN_NULL();
   }
-  RETURN_STRING(php_pcsc_error_to_string(in_errno));
+  RETURN_STRING(php_pcsc_error_to_string((DWORD)in_errno));
 }
 /* }}} */
