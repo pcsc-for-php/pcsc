@@ -20,15 +20,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>calvin@cmpct.info</email>
   <active>yes</active>
  </developer>
- <date>2021-02-03</date>
- <time>13:02:23</time>
+ <date>2021-02-08</date>
+ <time>23:22:33</time>
  <version>
   <release>0.4.0</release>
   <api>0.3.1</api>
  </version>
  <stability>
-  <release>alpha</release>
-  <api>alpha</api>
+  <release>beta</release>
+  <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
  <notes>Updated for PHP 7 compatibility.</notes>
