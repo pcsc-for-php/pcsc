@@ -1,12 +1,6 @@
-<h2 id="Notes">Notes</h2>
-
-<p>This code does not work with version 7 of PHP! Currently I am not able to fix this. If you want to take over development or submit patches it is very welcome... Please <a href="contact.html">contact</a> me if you are interested.</p>
-
-<p>I do not write PHP code since many years so it would be great to find a maintainer for this code.</p>
-
 <h2 id="About">About</h2>
 
-<p>This is the only extension for using <a href="http://www.pcscworkgroup.com/" class="ext">PC/SC</a> based smart cards with <a href="http://www.php.net" class="ext">PHP</a>5. It is a wrapper to the wonderful and free project by Ludovic Rousseau, <a href="http://pcsclite.alioth.debian.org/" class="ext">PCSC-Lite</a>, which is the middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is compatible to the winscard API it should be possible to compile this extension using a Windows(R) operating system. Currently I only take focus on Linux environments.</p>
+<p>This is the only extension for using <a href="http://www.pcscworkgroup.com/" class="ext">PC/SC</a> based smart cards with <a href="http://www.php.net" class="ext">PHP</a>. It is a wrapper to the wonderful and free project by Ludovic Rousseau, <a href="http://pcsclite.alioth.debian.org/" class="ext">PCSC-Lite</a>, which is the middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is compatible to the winscard API it should be possible to compile this extension using a Windows(R) operating system. Currently I only take focus on Linux environments.</p>
 
 <p>Thanks are going to Johann Dantant! He provides a PC/SC extension for PHP since 2005 and I reused some of his code. He allowed me to relicense these parts under the terms of the PHP license so I could integrate PCSC-Lite natively into PHP.</p>
 
@@ -94,15 +88,6 @@ make install</pre>
 <p>You could get the code using the following command:</p>
 
 <pre>svn checkout http://svn.php.net/repository/pecl/pcsc/trunk pcsc</pre>
-
-<!--<h2>Latest commits:</h2>
-
-<div id="github-commits"></div>
-<script>
-$(function() {
-      $('#github-commits').githubInfoWidget({ user: 'hanez', repo: 'pcsc-for-php', branch: 'master', last: 30 });
-});
-</script>-->
 
 <h2 id="License">License</h2>
 
