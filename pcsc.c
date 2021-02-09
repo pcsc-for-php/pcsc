@@ -1,8 +1,6 @@
 /*
  +----------------------------------------------------------------------+
- | PHP Version 5                                                        |
- +----------------------------------------------------------------------+
- | Copyright (c) 1997-2006 The PHP Group                                |
+ | Copyright (c) The PHP Group                                          |
  +----------------------------------------------------------------------+
  | This source file is subject to version 3.01 of the PHP license,      |
  | that is bundled with this package in the file LICENSE, and is        |
@@ -102,13 +100,13 @@ static void php_pcsc_ctx_res_dtor(zend_resource *rsrc) {
 	context=(SCARDCONTEXT)rsrc->ptr;
 	rc = SCardIsValidContext(context);
 	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL, E_WARNING, "PC/SC context dtor: SCardIsValidContext returned %s (0x%x)", php_pcsc_error_to_string(rc), rc);
+		php_error_docref(NULL, E_WARNING, "PC/SC context dtor: SCardIsValidContext returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
 		return;
 	}
 
 	rc = SCardReleaseContext(context);
 	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL, E_WARNING, "PC/SC context dtor: SCardReleaseContext returned %s (0x%x)", php_pcsc_error_to_string(rc), rc);
+		php_error_docref(NULL, E_WARNING, "PC/SC context dtor: SCardReleaseContext returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
 		return;
 	}
 	return;
@@ -127,7 +125,7 @@ static void php_pcsc_conn_res_dtor(zend_resource *rsrc) {
 	
 	rc = SCardDisconnect(hCard, SCARD_LEAVE_CARD);
 	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL, E_WARNING, "PC/SC connection dtor: SCardDisconnect returned %s (0x%x)", php_pcsc_error_to_string(rc), rc);
+		php_error_docref(NULL, E_WARNING, "PC/SC connection dtor: SCardDisconnect returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
 	}
 }
 
@@ -539,7 +537,6 @@ PHP_FUNCTION(scard_is_valid_context)
    Invalidate the PC/SC context */
 PHP_FUNCTION(scard_release_context)
 {
-  LONG rc = 0;
   zval* ctx_res;
   SCARDCONTEXT context;
   
@@ -547,6 +544,7 @@ PHP_FUNCTION(scard_release_context)
     RETURN_NULL();
   }
   ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
+  (void)context;
 
   zend_hash_index_del(&EG(regular_list), Z_RES_HANDLE_P(ctx_res));
   RETURN_TRUE;
@@ -669,7 +667,7 @@ PHP_FUNCTION(scard_transmit)
   SCARD_IO_REQUEST *recvPci = NULL;
   BYTE *sendBuffer;
   BYTE *recvBuffer;
-  DWORD sendLen, recvLen;
+  DWORD sendLen = 0, recvLen;
   LONG rc;
   char *apdu;
   size_t apduLen;
@@ -734,7 +732,6 @@ PHP_FUNCTION(scard_status)
 {
   zval* conn_res;
   SCARDHANDLE hCard = 0;
-  char *strReader = NULL;
   DWORD dwProtocol, dwState;
   BYTE atrBuffer[32];
   DWORD atrLen;
