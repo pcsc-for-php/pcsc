@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: c92a84c03add0a3e132eb4ce3b787e285148e03e */
+ * Stub hash: 3e1df1d509b6416c1eb997f61295c26d9ad0fd03 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_scard_establish_context, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -17,7 +17,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_scard_connect, 0, 2, MAY_BE_ARRAY|MAY_BE_FALSE)
 	ZEND_ARG_INFO(0, context)
 	ZEND_ARG_TYPE_INFO(0, reader_name, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, preferred_protocol, IS_LONG, 0, "SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T0")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, preferred_protocol, IS_LONG, 0, "SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1")
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(1, current_protocol, IS_LONG, 0, "NULL")
 ZEND_END_ARG_INFO()
 

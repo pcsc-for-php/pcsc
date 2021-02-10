@@ -29,7 +29,7 @@ function scard_list_readers($context): array|false {}
  * @param resource $context
  * @return resource|false
  */
-function scard_connect($context, string $reader_name, int $preferred_protocol=SCARD_PROTOCOL_T0|SCARD_PROTOCOL_T0, int &$current_protocol=NULL): array|false {}
+function scard_connect($context, string $reader_name, int $preferred_protocol=SCARD_PROTOCOL_T0|SCARD_PROTOCOL_T1, int &$current_protocol=NULL): array|false {}
 
 /**
  * @param resource $card
