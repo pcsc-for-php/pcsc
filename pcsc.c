@@ -36,59 +36,11 @@ ZEND_DECLARE_MODULE_GLOBALS(pcsc);
 #define TRUE 1
 #endif
 
-/* arg info for scard_connect (accepts an optional compile-time reference parameter) */
-ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_connect_arginfo, 0, 0, 2)
-	ZEND_ARG_INFO(0, context)
-	ZEND_ARG_INFO(0, reader_name)
-	ZEND_ARG_INFO(0, preferred_protocol)
-	ZEND_ARG_INFO(1, active_protocol)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_void, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_context, 0, 0, 1)
-	ZEND_ARG_INFO(0, context)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_disconnect, 0, 0, 1)
-	ZEND_ARG_INFO(0, card)
-	ZEND_ARG_INFO(0, disposition)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_transmit, 0, 0, 2)
-	ZEND_ARG_INFO(0, card)
-	ZEND_ARG_INFO(0, command)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_card, 0, 0, 1)
-	ZEND_ARG_INFO(0, card)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(php_pcsc_scard_errstr, 0, 0, 1)
-	ZEND_ARG_INFO(0, errno)
-ZEND_END_ARG_INFO()
-
-/* {{{ pcsc_functions[]
- *
- * Every user visible function must have an entry in pcsc_functions[].
- */
-zend_function_entry pcsc_functions[] = {
-  PHP_FE(scard_establish_context, php_pcsc_scard_void)
-  PHP_FE(scard_release_context, php_pcsc_scard_context)
-  PHP_FE(scard_is_valid_context, php_pcsc_scard_context)
-  PHP_FE(scard_list_readers, php_pcsc_scard_context)
-  PHP_FE(scard_connect, php_pcsc_scard_connect_arginfo)
-  //PHP_FE(scard_reconnect, NULL)
-  PHP_FE(scard_disconnect, php_pcsc_scard_disconnect)
-  PHP_FE(scard_transmit, php_pcsc_scard_transmit)
-  PHP_FE(scard_status, php_pcsc_scard_card)
-  //PHP_FE(scard_get_status_change, NULL)
-  PHP_FE(scard_last_errno, php_pcsc_scard_void)
-  PHP_FE(scard_errstr, php_pcsc_scard_errstr)
-  PHP_FE_END
-};
-/* }}} */
+#if PHP_VERSION_ID < 80000
+#include "pcsc_legacy_arginfo.h"
+#else
+#include "pcsc_arginfo.h"
+#endif
 
 /* {{{ pcsc_module_entry
  */
@@ -97,7 +49,7 @@ zend_module_entry pcsc_module_entry = {
   STANDARD_MODULE_HEADER,
 #endif
   "PC/SC",
-  pcsc_functions,
+  ext_functions,
   PHP_MINIT(pcsc),
   PHP_MSHUTDOWN(pcsc),
   NULL,
