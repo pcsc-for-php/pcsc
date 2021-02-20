@@ -1,6 +1,6 @@
 <h2 id="About">About</h2>
 
-<p>This is the only extension for using <a href="http://www.pcscworkgroup.com/" class="ext">PC/SC</a> based smart cards with <a href="http://www.php.net" class="ext">PHP</a>. It is a wrapper to the wonderful and free project by Ludovic Rousseau, <a href="http://pcsclite.alioth.debian.org/" class="ext">PCSC-Lite</a>, which is the middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is compatible to the winscard API it should be possible to compile this extension using a Windows(R) operating system. Currently I only take focus on Linux environments.</p>
+<p>This is the only extension for using <a href="http://www.pcscworkgroup.com/" class="ext">PC/SC</a> based smart cards with <a href="http://www.php.net" class="ext">PHP</a>. It is a wrapper to the wonderful and free project by Ludovic Rousseau, <a href="https://pcsclite.apdu.fr/" class="ext">PCSC-Lite</a>, which is the middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is compatible to the winscard API it should be possible to compile this extension using a Windows or macOS operating system.</p>
 
 <p>Thanks are going to Johann Dantant! He provides a PC/SC extension for PHP since 2005 and I reused some of his code. He allowed me to relicense these parts under the terms of the PHP license so I could integrate PCSC-Lite natively into PHP.</p>
 
@@ -8,13 +8,12 @@
 
 <p>I recommend to install the PECL extension the "PHP" way:</p>
 
-<pre>pecl install pcsc-alpha</pre>
+<pre>pecl install pcsc-beta</pre>
 
-<p>You can install the latest version by downloading the sources and compile yourself too... :)</p>
+<p>You can install the latest code by downloading the sources and compile yourself too.</p>
 
-<pre>wget http://pecl.php.net/get/pcsc-0.3.1.tgz
-tar -xvf pcsc-0.3.1.tgz
-cd pcsc-0.3.1
+<pre>git clone https://github.com/pcsc-for-php/pcsc.git
+cd pcsc
 phpize
 ./configure
 make
@@ -76,19 +75,6 @@ make install</pre>
 
 <h3 id="scard_cancel">scard_cancel($context);</h3>
 
-<h2 id="Code">Code</h2>
-
-<p>The code has successful been released to the official code repository <a href="http://pecl.php.net" class="ext">pecl.php.net</a>... ;)
-
-<ul>
-  <li><a href="http://pecl.php.net/package/pcsc" class="ext">PECL Project Page</a></li>
-  <li><a href="http://svn.php.net/viewvc/pecl/pcsc/trunk/" class="ext">PHP SVN Code Browser</a></li>
-</ul>
-
-<p>You could get the code using the following command:</p>
-
-<pre>svn checkout http://svn.php.net/repository/pecl/pcsc/trunk pcsc</pre>
-
 <h2 id="License">License</h2>
 
 <p>This code is licensed under the terms of the PHP License version 3.01. PCSC-Lite is licensed in a way where it is possible to integrate it native in the PHP environment.</p>
@@ -96,8 +82,9 @@ make install</pre>
 <h2 id="Links">Links</h2>
 
 <ul>
-	<li><a href="http://www.pcscworkgroup.com/" class="ext">PC/SC Worgroup</a> - Homepage and definition file downloads.</li>
-	<li><a href="http://en.wikipedia.org/wiki/PC/SC" class="ext">PC/SC</a> - PC/SC at Wikipedia.</li>
-	<li><a href="http://pcsclite.alioth.debian.org/" class="ext">PC/SC-Lite</a> - The free and open implementation of the PC/SC SCard API for UNIX</li>
-	<li><a href="http://ludovicrousseau.blogspot.de/2015/01/pcsc-sample-in-php5.html" class="ext">PCSC sample in PHP5</a> - Ludovic Rousseau about "PC/SC for PHP"</li>
+  <li><a href="http://pecl.php.net/package/pcsc" class="ext">PECL Project Page</a> - Page for package download at PHP.net</li>
+  <li><a href="http://www.pcscworkgroup.com/" class="ext">PC/SC Worgroup</a> - Homepage and definition file downloads.</li>
+  <li><a href="http://en.wikipedia.org/wiki/PC/SC" class="ext">PC/SC</a> - PC/SC at Wikipedia.</li>
+  <li><a href="https://pcsclite.apdu.fr/" class="ext">PC/SC-Lite</a> - The free and open implementation of the PC/SC SCard API for UNIX</li>
+  <li><a href="http://ludovicrousseau.blogspot.de/2015/01/pcsc-sample-in-php5.html" class="ext">PCSC sample in PHP5</a> - Ludovic Rousseau about "PC/SC for PHP"</li>
 </ul>

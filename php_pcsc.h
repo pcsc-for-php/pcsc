@@ -4,7 +4,7 @@
 extern zend_module_entry pcsc_module_entry;
 #define phpext_pcsc_ptr &pcsc_module_entry
 
-#define PHP_PCSC_VERSION "0.4.0"
+#define PHP_PCSC_VERSION "0.5.0"
 
 #ifdef PHP_WIN32
 #define PHP_PCSC_API __declspec(dllexport)

@@ -6,7 +6,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <name>pcsc</name>
  <channel>pecl.php.net</channel>
  <summary>winscard PC/SC API support for PHP</summary>
- <description>This is an extension for using PC/SC based smart cards with PHP. It is a wrapper to the winscard API which provides a native interface to smart cards using the PC/SC standard. Both Linux and Windows are supported.
+ <description>This is an extension for using PC/SC based smart cards with PHP. It is a wrapper to the winscard API which provides a native interface to smart cards using the PC/SC standard. Linux/UNIX and Windows are supported.
  </description>
  <lead>
   <name>Johannes Findeisen</name>
@@ -20,10 +20,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>calvin@cmpct.info</email>
   <active>yes</active>
  </developer>
- <date>2021-02-08</date>
- <time>23:22:33</time>
+ <date>2021-02-20</date>
+ <time>23:44:26</time>
  <version>
-  <release>0.4.0</release>
+  <release>0.5.0</release>
   <api>0.3.1</api>
  </version>
  <stability>
@@ -31,7 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
- <notes>Updated for PHP 7 compatibility.</notes>
+ <notes>Updated for PHP 8 compatibility.</notes>
  <contents>
   <dir name="/">
    <file name="COPYING" role="doc" />
