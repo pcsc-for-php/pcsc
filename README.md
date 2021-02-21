@@ -31,6 +31,30 @@ After that you have all needed files in ./modules/ .
 
 The extension currently provides the following API:
 
+
+### scard_cancel($context);
+
+**NOT IMPLEMENTED!** Maybe not useful because of this extension is for server side usage designed but since we want the API implemented it should be available.
+
+### scard_connect($context, "OMNIKEY CardMan 5x21 00 00" [, int $protocol]);
+
+Connects to a card. Returns the $connection to a reader or FALSE.
+
+Where optional $protocol is:
+
+ * 1 = T=0
+ * 2 = T=1
+
+Default $protocol is T=1.
+
+### scard_disconnect($connection);
+
+Disconnects the $connection to a card. Returns the TRUE if disconnecting was succesful or FALSE.
+
+### scard_errstr($errno)
+
+Returns $errstr for $errno or NULL.
+
 ### scard_establish_context();
 
 Returns the application $context to the PC/SC resource manager.
@@ -39,9 +63,9 @@ Returns the application $context to the PC/SC resource manager.
 
 Returns TRUE if $context is valid or FALSE if $context is not valid.
 
-### scard_release_context($context);
+### scard_last_errno()
 
-Releases the application $context.
+Returns the last $errno or nothing? NULL or FALSE? (TODO)
 
 ### scard_list_readers($context);
 
@@ -60,30 +84,15 @@ array(3) {
 }
 ```
 
-### scard_connect($context, "OMNIKEY CardMan 5x21 00 00" [, int $protocol]);
-
-Connects to a card. Returns the $connection to a reader or FALSE.
-
-Where optional $protocol is:
-
- * 1 = T=0
- * 2 = T=1
-
-Default $protocol is T=1.
-
 ### scard_reconnect($connection);
 
 Returns the $connection to a reader or FALSE.
 
 **NOT IMPLEMENTED!** Should be available.
 
-### scard_disconnect($connection);
+### scard_release_context($context);
 
-Disconnects the $connection to a card. Returns the TRUE if disconnecting was succesful or FALSE.
-
-### scard_transmit($connection, $apdu);
-
-Returns the response $apdu as string or FALSE.
+Releases the application $context.
 
 ### scard_status($connection);
 
@@ -110,9 +119,9 @@ array(7) {
 }
 ```
 
-### scard_cancel($context);
+### scard_transmit($connection, $apdu);
 
-**NOT IMPLEMENTED!** Maybe not useful because of this extension is for server side usage designed but since we want the API implemented it should be available.
+Returns the response $apdu as string or FALSE.
 
 ## License
 
@@ -126,4 +135,5 @@ This code is licensed under the terms of the PHP License version 3.01. PCSC-Lite
  * [PC/SC-Lite](https://pcsclite.apdu.fr/) - The free and open implementation of the PC/SC SCard API for UNIX
  * [PCSC sample in PHP5](http://ludovicrousseau.blogspot.de/2015/01/pcsc-sample-in-php5.html) - Ludovic Rousseau about "PC/SC for PHP"
  * [winscard.h header](https://docs.microsoft.com/en-us/windows/win32/api/winscard/) - Microsoft Docs
+ * [PC/SC API from PCSC-Lite](https://pcsclite.apdu.fr/api/group__API.html)
 
