@@ -87,7 +87,28 @@ Returns the response $apdu as string or FALSE.
 
 ### scard_status($connection);
 
-Returns the status or FALSE.
+Returns the status array or FALSE.
+
+#### Example:
+
+```
+array(7) {
+  ["state"]=>
+  int(52)
+  ["SCARD_PRESENT"]=>
+  int(1)
+  ["SCARD_POWERED"]=>
+  int(1)
+  ["SCARD_NEGOTIABLE"]=>
+  int(1)
+  ["SCARD_PROTOCOL_T0"]=>
+  int(1)
+  ["PROTOCOL"]=>
+  string(3) "T=1"
+  ["ATR"]=>
+  string(28) "3B8980014A434F5033315632324A"
+}
+```
 
 ### scard_cancel($context);
 
