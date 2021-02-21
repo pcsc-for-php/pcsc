@@ -93,4 +93,5 @@ This code is licensed under the terms of the PHP License version 3.01. PCSC-Lite
  * [PC/SC](http://en.wikipedia.org/wiki/PC/SC) - PC/SC at Wikipedia
  * [PC/SC-Lite](https://pcsclite.apdu.fr/) - The free and open implementation of the PC/SC SCard API for UNIX
  * [PCSC sample in PHP5](http://ludovicrousseau.blogspot.de/2015/01/pcsc-sample-in-php5.html) - Ludovic Rousseau about "PC/SC for PHP"
+ * [winscard.h header](https://docs.microsoft.com/en-us/windows/win32/api/winscard/) - Microsoft Docs
 
