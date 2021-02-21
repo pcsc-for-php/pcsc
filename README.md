@@ -1,90 +1,96 @@
-<h2 id="About">About</h2>
+# PC/SC for PHP
 
-<p>This is the only extension for using <a href="http://www.pcscworkgroup.com/" class="ext">PC/SC</a> based smart cards with <a href="http://www.php.net" class="ext">PHP</a>. It is a wrapper to the wonderful and free project by Ludovic Rousseau, <a href="https://pcsclite.apdu.fr/" class="ext">PCSC-Lite</a>, which is the middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is compatible to the winscard API it should be possible to compile this extension using a Windows or macOS operating system.</p>
+## About
 
-<p>Thanks are going to Johann Dantant! He provides a PC/SC extension for PHP since 2005 and I reused some of his code. He allowed me to relicense these parts under the terms of the PHP license so I could integrate PCSC-Lite natively into PHP.</p>
+This is the only extension for using [PC/SC](http://www.pcscworkgroup.com/) based smart cards with [PHP](http://www.php.net). It is a wrapper to the wonderful and free project by Ludovic Rousseau, [PCSC-Lite](https://pcsclite.apdu.fr/), which is the middleware to access a smart card using SCard API (PC/SC). Since PCSC-Lite is compatible to the winscard API it should be possible to compile this extension using a Windows or macOS operating system.
 
-<h2 id="Installation">Installation</h2>
+Thanks are going to Johann Dantant! He provided a PC/SC extension for PHP since 2005 and I reused some of his code. He allowed me to relicense these parts under the terms of the PHP license so I could integrate PCSC-Lite native into PHP.
 
-<p>I recommend to install the PECL extension the "PHP" way:</p>
+## Installation
 
-<pre>pecl install pcsc-beta</pre>
+I recommend to install the PECL extension the "PHP" way:
 
-<p>You can install the latest code by downloading the sources and compile yourself too.</p>
+```
+pecl install pcsc-beta
+```
 
-<pre>git clone https://github.com/pcsc-for-php/pcsc.git
+You can install the latest code by downloading the sources and compile yourself too.
+
+```
+git clone https://github.com/pcsc-for-php/pcsc.git
 cd pcsc
 phpize
 ./configure
 make
-make install</pre>
+make install
+```
 
-<p>After that you have all needed files in ./modules/</p>
+After that you have all needed files in ./modules/ .
 
-<h2 id="API">API</h2>
+## API
 
-<p>The extension currently provides the following API:</p>
+The extension currently provides the following API:
 
-<h3 id="scard_establish_context">scard_establish_context();</h3>
+### scard_establish_context">scard_establish_context();
 
-<p>Returns the application $context to the PC/SC resource manager.</p>
+Returns the application $context to the PC/SC resource manager.
 
-<h3 id="scard_is_valid_context">scard_is_valid_context($context);</h3>
+### scard_is_valid_context">scard_is_valid_context($context);
 
-<p>Returns TRUE if $context is valid or FALSE if $context is not valid.</p>
+Returns TRUE if $context is valid or FALSE if $context is not valid.
 
-<h3 id="scard_release_context">scard_release_context($context);</h3>
+### scard_release_context">scard_release_context($context);
 
-<p>Releases the application $context.</p>
+Releases the application $context.
 
-<h3 id="scard_list_readers">scard_list_readers($context);</h3>
+### scard_list_readers">scard_list_readers($context);
 
-<p>Returns an array of available readers or FALSE.</p>
+Returns an array of available readers or FALSE.
 
-<h5>Example:</h5>
+#### Example:
 
-<pre>array(3) {
-  [0]=&gt;
+```
+array(3) {
+  [0]=>
   string(26) "OMNIKEY CardMan 5x21 00 00"
-  [1]=&gt;
+  [1]=>
   string(26) "OMNIKEY CardMan 5x21 00 01"
-  [2]=&gt;
+  [2]=>
   string(76) "SCL01x Contactless Reader [SCL01x Contactless Reader] (21161009200722) 00 00"
 }
-</pre>
+```
 
-<h3 id="scard_connect">scard_connect($context, "OMNIKEY CardMan 5x21 00 00");</h3>
+### scard_connect">scard_connect($context, "OMNIKEY CardMan 5x21 00 00");
 
-<p>Connects to a card. Returns the $connection to a reader or FALSE.</p>
+Connects to a card. Returns the $connection to a reader or FALSE.
 
-<h3 id="scard_reconnect">scard_reconnect($connection);</h3>
+### scard_reconnect">scard_reconnect($connection);
 
-<p>Returns the $connection to a reader or FALSE.</p>
+Returns the $connection to a reader or FALSE.
 
-<h3 id="scard_disconnect">scard_disconnect($connection);</h3>
+### scard_disconnect">scard_disconnect($connection);
 
-<p>Disconnects the $connection to a card. Returns the TRUE if disconnecting was succesful or FALSE.</p>
+Disconnects the $connection to a card. Returns the TRUE if disconnecting was succesful or FALSE.
 
-<h3 id="scard_transmit">scard_transmit($connection, $apdu);</h3>
+### scard_transmit">scard_transmit($connection, $apdu);
 
-<p>Returns the response $apdu as string or FALSE.</p>
+Returns the response $apdu as string or FALSE.
 
-<h3 id="scard_status">scard_status($connection);</h3>
+### scard_status">scard_status($connection);
 
-<p>Returns the status or FALSE.</p>
+Returns the status or FALSE.
 
-<h3 id="scard_cancel">scard_cancel($context);</h3>
+### scard_cancel">scard_cancel($context);
 
-<h2 id="License">License</h2>
+## License
 
-<p>This code is licensed under the terms of the PHP License version 3.01. PCSC-Lite is licensed in a way where it is possible to integrate it native in the PHP environment.</p>
+This code is licensed under the terms of the PHP License version 3.01. PCSC-Lite is licensed in a way where it is possible to integrate it native in the PHP environment.
 
-<h2 id="Links">Links</h2>
+## Links
 
-<ul>
-  <li><a href="http://pecl.php.net/package/pcsc" class="ext">PECL Project Page</a> - Page for package download at PHP.net</li>
-  <li><a href="http://www.pcscworkgroup.com/" class="ext">PC/SC Worgroup</a> - Homepage and definition file downloads.</li>
-  <li><a href="http://en.wikipedia.org/wiki/PC/SC" class="ext">PC/SC</a> - PC/SC at Wikipedia.</li>
-  <li><a href="https://pcsclite.apdu.fr/" class="ext">PC/SC-Lite</a> - The free and open implementation of the PC/SC SCard API for UNIX</li>
-  <li><a href="http://ludovicrousseau.blogspot.de/2015/01/pcsc-sample-in-php5.html" class="ext">PCSC sample in PHP5</a> - Ludovic Rousseau about "PC/SC for PHP"</li>
-</ul>
+ * [PECL Project Page](http://pecl.php.net/package/pcsc) - Page for package download at PHP.net
+ * [PC/SC Worgroup](http://www.pcscworkgroup.com/) - Homepage and definition file downloads
+ * [PC/SC](http://en.wikipedia.org/wiki/PC/SC) - PC/SC at Wikipedia
+ * [PC/SC-Lite](https://pcsclite.apdu.fr/) - The free and open implementation of the PC/SC SCard API for UNIX
+ * [PCSC sample in PHP5](http://ludovicrousseau.blogspot.de/2015/01/pcsc-sample-in-php5.html) - Ludovic Rousseau about "PC/SC for PHP"
+
