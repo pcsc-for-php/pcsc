@@ -75,6 +75,8 @@ Default $protocol is T=1.
 
 Returns the $connection to a reader or FALSE.
 
+**NOT IMPLEMENTED!** Should be available.
+
 ### scard_disconnect($connection);
 
 Disconnects the $connection to a card. Returns the TRUE if disconnecting was succesful or FALSE.
@@ -88,6 +90,8 @@ Returns the response $apdu as string or FALSE.
 Returns the status or FALSE.
 
 ### scard_cancel($context);
+
+**NOT IMPLEMENTED!** Maybe not useful because of this extension is for server side usage designed but since we want the API implemented it should be available.
 
 ## License
 
