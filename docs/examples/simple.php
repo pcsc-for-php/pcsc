@@ -39,7 +39,7 @@ echo "\n";
 
 # Connect to the card
 echo ">> Connect to Card\n";
-$connection = scard_connect($context, $reader);
+$connection = scard_connect($context, $reader, 1);
 var_dump($connection);
 
 $errno = scard_last_errno();
@@ -66,6 +66,17 @@ $CMD = "0084000008";
 $res = scard_transmit($connection, $CMD);
 var_dump($res);
 #echo pack("H*", $res), "\n";
+
+$errno = scard_last_errno();
+var_dump($errno);
+$errstr = scard_errstr($errno);
+var_dump($errstr);
+echo "\n";
+
+# Show Status
+echo ">> Show Status\n";
+$status = scard_status($connection);
+var_dump($status);
 
 $errno = scard_last_errno();
 var_dump($errno);

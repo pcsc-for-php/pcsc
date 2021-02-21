@@ -60,9 +60,16 @@ array(3) {
 }
 ```
 
-### scard_connect($context, "OMNIKEY CardMan 5x21 00 00");
+### scard_connect($context, "OMNIKEY CardMan 5x21 00 00" [, int $protocol]);
 
 Connects to a card. Returns the $connection to a reader or FALSE.
+
+Where optional $protocol is:
+
+ * 1 = T=0
+ * 2 = T=1
+
+Default $protocol is T=1.
 
 ### scard_reconnect($connection);
 
