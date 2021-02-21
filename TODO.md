@@ -8,7 +8,7 @@ Implement important missing PC/SC functions and write documentation:
  * SCardGetStatusChange()
  * Write complete API documentation
 
-# Implement less important missing PC/SC functions:
+Implement less important missing PC/SC functions:
 
  * SCardGetAttrib()
  * SCardSetAttrib()
