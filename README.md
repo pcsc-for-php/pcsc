@@ -33,6 +33,8 @@ The extension currently provides the following API (alphabetical order):
 
 ### pcsc_stringify_error($errno);
 
+Returns $errstr for $errno or NULL.
+
 **NOT IMPLEMENTED!** - Should be available!
 
 Duplicate of scard_errstr() but this should be the default.
