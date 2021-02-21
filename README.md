@@ -51,7 +51,7 @@ Default $protocol is T=1.
 
 Disconnects the $connection to a card. Returns the TRUE if disconnecting was succesful or FALSE.
 
-### scard_errstr($errno)
+### scard_errstr($errno) - Not PC/SC standard.
 
 Returns $errstr for $errno or NULL.
 
@@ -63,7 +63,7 @@ Returns the application $context to the PC/SC resource manager.
 
 Returns TRUE if $context is valid or FALSE if $context is not valid.
 
-### scard_last_errno()
+### scard_last_errno() - Not PC/SC standard.
 
 Returns the last $errno or nothing? NULL or FALSE? (TODO)
 
