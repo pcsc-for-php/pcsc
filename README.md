@@ -31,19 +31,19 @@ After that you have all needed files in ./modules/ .
 
 The extension currently provides the following API:
 
-### scard_establish_context">scard_establish_context();
+### scard_establish_context();
 
 Returns the application $context to the PC/SC resource manager.
 
-### scard_is_valid_context">scard_is_valid_context($context);
+### scard_is_valid_context($context);
 
 Returns TRUE if $context is valid or FALSE if $context is not valid.
 
-### scard_release_context">scard_release_context($context);
+### scard_release_context($context);
 
 Releases the application $context.
 
-### scard_list_readers">scard_list_readers($context);
+### scard_list_readers($context);
 
 Returns an array of available readers or FALSE.
 
@@ -60,27 +60,27 @@ array(3) {
 }
 ```
 
-### scard_connect">scard_connect($context, "OMNIKEY CardMan 5x21 00 00");
+### scard_connect($context, "OMNIKEY CardMan 5x21 00 00");
 
 Connects to a card. Returns the $connection to a reader or FALSE.
 
-### scard_reconnect">scard_reconnect($connection);
+### scard_reconnect($connection);
 
 Returns the $connection to a reader or FALSE.
 
-### scard_disconnect">scard_disconnect($connection);
+### scard_disconnect($connection);
 
 Disconnects the $connection to a card. Returns the TRUE if disconnecting was succesful or FALSE.
 
-### scard_transmit">scard_transmit($connection, $apdu);
+### scard_transmit($connection, $apdu);
 
 Returns the response $apdu as string or FALSE.
 
-### scard_status">scard_status($connection);
+### scard_status($connection);
 
 Returns the status or FALSE.
 
-### scard_cancel">scard_cancel($context);
+### scard_cancel($context);
 
 ## License
 
