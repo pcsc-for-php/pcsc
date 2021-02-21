@@ -1,11 +1,11 @@
 # Contributors
 
-## In alphabetical order:
+## In alphabetical order by surname:
 
- * Johann Dantant (Original author)
  * Anatol Belski (Contributor)
  * Calvin Buckley (Contributor)
  * Remi Collet (Contributor)
+ * Johann Dantant (Original author)
  * Johannes Findeisen (Maintainer)
  * Marco Schuster (Contributor)
 
