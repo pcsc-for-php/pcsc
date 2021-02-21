@@ -29,12 +29,25 @@ After that you have all needed files in ./modules/ .
 
 ## API
 
-The extension currently provides the following API:
+The extension currently provides the following API (alphabetical order):
 
+### pcsc_stringify_error($errno);
+
+**NOT IMPLEMENTED!** - Should be available!
+
+Duplicate of scard_errstr() but this should be the default.
+
+### scard_begin_transaction($connection);
+
+**NOT IMPLEMENTED!** - Should be available!
+
+Establishes a temporary exclusive access mode for doing a serie of commands in a transaction.
+
+You might want to use this when you are selecting a few files and then writing a large file so you can make sure that another application will not change the current file. If another application has a lock on this reader or this application is in SCARD_SHARE_EXCLUSIVE there will be no action taken.
 
 ### scard_cancel($context);
 
-**NOT IMPLEMENTED!** Maybe not useful because of this extension is for server side usage designed but since we want the API implemented it should be available.
+**NOT IMPLEMENTED!** - Maybe not useful because of this extension is for server side usage designed but since we want the API implemented it should be available.
 
 ### scard_connect($context, "OMNIKEY CardMan 5x21 00 00" [, int $protocol]);
 
@@ -47,9 +60,23 @@ Where optional $protocol is:
 
 Default $protocol is T=1.
 
+### scard_control($connection);
+
+**NOT IMPLEMENTED!** - Should be available!
+
+Sends a command directly to the IFD Handler (reader driver) to be processed by the reader.
+
 ### scard_disconnect($connection);
 
 Disconnects the $connection to a card. Returns the TRUE if disconnecting was succesful or FALSE.
+
+### scard_end_transaction($connection);
+
+**NOT IMPLEMENTED!** - Should be available!
+
+Ends a previously begun transaction.
+
+The calling application must be the owner of the previously begun transaction or an error will occur.
 
 ### scard_errstr($errno); - Not PC/SC standard.
 
@@ -59,6 +86,18 @@ Returns $errstr for $errno or NULL.
 
 Returns the application $context to the PC/SC resource manager.
 
+### scard_get_attrib($connection);
+
+**NOT IMPLEMENTED!** - Should be available!
+
+Get an attribute from the IFD Handler (reader driver).
+
+### scard_get_status_change($context);
+
+**NOT IMPLEMENTED!** - Should be available!
+
+Blocks execution until the current availability of the cards in a specific set of readers changes.
+
 ### scard_is_valid_context($context);
 
 Returns TRUE if $context is valid or FALSE if $context is not valid.
@@ -66,6 +105,12 @@ Returns TRUE if $context is valid or FALSE if $context is not valid.
 ### scard_last_errno(); - Not PC/SC standard.
 
 Returns the last $errno or nothing? NULL or FALSE? (TODO)
+
+### scard_list_reader_groups($context);
+
+**NOT IMPLEMENTED!** - Should be available!
+
+Returns a list of currently available reader groups on the system.
 
 ### scard_list_readers($context);
 
@@ -86,13 +131,19 @@ array(3) {
 
 ### scard_reconnect($connection);
 
-Returns the $connection to a reader or FALSE.
+**NOT IMPLEMENTED!** - Should be available!
 
-**NOT IMPLEMENTED!** Should be available.
+Returns the $connection to a reader or FALSE.
 
 ### scard_release_context($context);
 
 Releases the application $context.
+
+### scard_set_attrib($connection);
+
+**NOT IMPLEMENTED!** - Should be available!
+
+Set an attribute of the IFD Handler.
 
 ### scard_status($connection);
 
@@ -110,7 +161,7 @@ array(7) {
   int(1)
   ["SCARD_NEGOTIABLE"]=>
   int(1)
-  ["SCARD_PROTOCOL_T0"]=>
+  ["SCARD_PROTOCOL_T1"]=>
   int(1)
   ["PROTOCOL"]=>
   string(3) "T=1"
