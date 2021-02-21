@@ -1,7 +1,5 @@
 # Contributors
 
-## In alphabetical order by surname:
-
  * Anatol Belski (Contributor)
  * Calvin Buckley (Contributor)
  * Remi Collet (Contributor)
