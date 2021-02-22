@@ -28,7 +28,7 @@ ZEND_DECLARE_MODULE_GLOBALS(pcsc);
 /* Compatibility shims */
 #ifndef ZEND_FETCH_RESOURCE
 #define ZEND_FETCH_RESOURCE(res, stmt_type, stmt, stmt_id, resource_type_name, le_stmt) \
-	res = (stmt_type)zend_fetch_resource(Z_RES_P(*stmt),resource_type_name,le_stmt);
+  res = (stmt_type)zend_fetch_resource(Z_RES_P(*stmt),resource_type_name,le_stmt);
 #endif
 
 #ifndef FALSE
@@ -71,44 +71,44 @@ ZEND_GET_MODULE(pcsc)
 /* resource container: context */
 static int le_pcsc_ctx_res;
 static void php_pcsc_ctx_res_dtor(zend_resource *rsrc) {
-	SCARDCONTEXT context;
-	LONG rc=0;
-	
-	context=(SCARDCONTEXT)rsrc->ptr;
-	rc = SCardIsValidContext(context);
-	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL, E_WARNING, "PC/SC context dtor: SCardIsValidContext returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
-		return;
-	}
+  SCARDCONTEXT context;
+  LONG rc=0;
 
-	rc = SCardReleaseContext(context);
-	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL, E_WARNING, "PC/SC context dtor: SCardReleaseContext returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
-		return;
-	}
-	return;
+  context=(SCARDCONTEXT)rsrc->ptr;
+  rc = SCardIsValidContext(context);
+  if (rc != SCARD_S_SUCCESS) {
+    php_error_docref(NULL, E_WARNING, "PC/SC context dtor: SCardIsValidContext returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
+    return;
+  }
+
+  rc = SCardReleaseContext(context);
+  if (rc != SCARD_S_SUCCESS) {
+    php_error_docref(NULL, E_WARNING, "PC/SC context dtor: SCardReleaseContext returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
+    return;
+  }
+  return;
 }
 
 /* resource container: connection */
 static int le_pcsc_conn_res;
 static void php_pcsc_conn_res_dtor(zend_resource *rsrc) {
-	SCARDHANDLE hCard;
-	LONG rc;
+  SCARDHANDLE hCard;
+  LONG rc;
 
-	//TODO: actually use this
-	return;
-	php_printf("conn dtor\n");
-	hCard=(SCARDHANDLE)rsrc->ptr;
-	
-	rc = SCardDisconnect(hCard, SCARD_LEAVE_CARD);
-	if (rc != SCARD_S_SUCCESS) {
-		php_error_docref(NULL, E_WARNING, "PC/SC connection dtor: SCardDisconnect returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
-	}
+  //TODO: actually use this
+  return;
+  php_printf("conn dtor\n");
+  hCard=(SCARDHANDLE)rsrc->ptr;
+
+  rc = SCardDisconnect(hCard, SCARD_LEAVE_CARD);
+  if (rc != SCARD_S_SUCCESS) {
+    php_error_docref(NULL, E_WARNING, "PC/SC connection dtor: SCardDisconnect returned %s (0x%lx)", php_pcsc_error_to_string(rc), rc);
+  }
 }
 
 /* TLS */
 static void php_pcsc_globals_ctor(zend_pcsc_globals* pcsc_globals) {
-	pcsc_globals->last_errno=SCARD_S_SUCCESS;
+  pcsc_globals->last_errno=SCARD_S_SUCCESS;
 }
 
 /* {{{ PHP_MINIT_FUNCTION
@@ -194,18 +194,18 @@ PHP_MINIT_FUNCTION(pcsc)
 #ifdef SCARD_E_WRITE_TOO_MANY
   REGISTER_PCSC_CONSTANT(SCARD_E_WRITE_TOO_MANY);
 #endif
-  
+
   REGISTER_PCSC_CONSTANT(SCARD_F_COMM_ERROR);
   REGISTER_PCSC_CONSTANT(SCARD_F_INTERNAL_ERROR);
   REGISTER_PCSC_CONSTANT(SCARD_F_UNKNOWN_ERROR);
   REGISTER_PCSC_CONSTANT(SCARD_F_WAITED_TOO_LONG);
-  
+
 #ifdef SCARD_P_SHUTDOWN
   REGISTER_PCSC_CONSTANT(SCARD_P_SHUTDOWN);
 #endif
-  
+
   REGISTER_PCSC_CONSTANT(SCARD_S_SUCCESS);
-  
+
 #ifdef SCARD_W_CANCELLED_BY_USER
   REGISTER_PCSC_CONSTANT(SCARD_W_CANCELLED_BY_USER);
 #endif
@@ -284,82 +284,82 @@ PHP_MINFO_FUNCTION(pcsc)
 
 /* map error codes to string */
 static char* php_pcsc_error_to_string(DWORD dwRC) {
-	switch(dwRC) {
+  switch(dwRC) {
 #ifdef SCARD_E_BAD_SEEK
-		case SCARD_E_BAD_SEEK: return "SCARD_E_BAD_SEEK";
+    case SCARD_E_BAD_SEEK: return "SCARD_E_BAD_SEEK";
 #endif
-		case SCARD_E_CANCELLED: return "SCARD_E_CANCELLED";
-		case SCARD_E_CANT_DISPOSE: return "SCARD_E_CANT_DISPOSE";
-		case SCARD_E_CARD_UNSUPPORTED: return "SCARD_E_CARD_UNSUPPORTED";
+    case SCARD_E_CANCELLED: return "SCARD_E_CANCELLED";
+    case SCARD_E_CANT_DISPOSE: return "SCARD_E_CANT_DISPOSE";
+    case SCARD_E_CARD_UNSUPPORTED: return "SCARD_E_CARD_UNSUPPORTED";
 #ifdef SCARD_E_CERTIFICATE_UNAVAILABLE
-		case SCARD_E_CERTIFICATE_UNAVAILABLE: return "SCARD_E_CERTIFICATE_UNAVAILABLE";
+    case SCARD_E_CERTIFICATE_UNAVAILABLE: return "SCARD_E_CERTIFICATE_UNAVAILABLE";
 #endif
 #ifdef SCARD_E_COMM_DATA_LOST
-		case SCARD_E_COMM_DATA_LOST: return "SCARD_E_COMM_DATA_LOST";
+    case SCARD_E_COMM_DATA_LOST: return "SCARD_E_COMM_DATA_LOST";
 #endif
 #ifdef SCARD_E_DIR_NOT_FOUND
-		case SCARD_E_DIR_NOT_FOUND: return "SCARD_E_DIR_NOT_FOUND";
+    case SCARD_E_DIR_NOT_FOUND: return "SCARD_E_DIR_NOT_FOUND";
 #endif
-		case SCARD_E_DUPLICATE_READER: return "SCARD_E_DUPLICATE_READER";
+    case SCARD_E_DUPLICATE_READER: return "SCARD_E_DUPLICATE_READER";
 #ifdef SCARD_E_FILE_NOT_FOUND
-		case SCARD_E_FILE_NOT_FOUND: return "SCARD_E_FILE_NOT_FOUND";
+    case SCARD_E_FILE_NOT_FOUND: return "SCARD_E_FILE_NOT_FOUND";
 #endif
 #ifdef SCARD_E_ICC_CREATEORDER
-		case SCARD_E_ICC_CREATEORDER: return "SCARD_E_ICC_CREATEORDER";
+    case SCARD_E_ICC_CREATEORDER: return "SCARD_E_ICC_CREATEORDER";
 #endif
 #ifdef SCARD_E_ICC_INSTALLATION
-		case SCARD_E_ICC_INSTALLATION: return "SCARD_E_ICC_INSTALLATION";
+    case SCARD_E_ICC_INSTALLATION: return "SCARD_E_ICC_INSTALLATION";
 #endif
-		case SCARD_E_INSUFFICIENT_BUFFER: return "SCARD_E_INSUFFICIENT_BUFFER";
-		case SCARD_E_INVALID_ATR: return "SCARD_E_INVALID_ATR";
+    case SCARD_E_INSUFFICIENT_BUFFER: return "SCARD_E_INSUFFICIENT_BUFFER";
+    case SCARD_E_INVALID_ATR: return "SCARD_E_INVALID_ATR";
 #ifdef SCARD_E_INVALID_CHV
-		case SCARD_E_INVALID_CHV: return "SCARD_E_INVALID_CHV";
+    case SCARD_E_INVALID_CHV: return "SCARD_E_INVALID_CHV";
 #endif
-		case SCARD_E_INVALID_HANDLE: return "SCARD_E_INVALID_HANDLE";
-		case SCARD_E_INVALID_PARAMETER: return "SCARD_E_INVALID_PARAMETER";
-		case SCARD_E_INVALID_TARGET: return "SCARD_E_INVALID_TARGET";
-		case SCARD_E_INVALID_VALUE: return "SCARD_E_INVALID_VALUE";
+    case SCARD_E_INVALID_HANDLE: return "SCARD_E_INVALID_HANDLE";
+    case SCARD_E_INVALID_PARAMETER: return "SCARD_E_INVALID_PARAMETER";
+    case SCARD_E_INVALID_TARGET: return "SCARD_E_INVALID_TARGET";
+    case SCARD_E_INVALID_VALUE: return "SCARD_E_INVALID_VALUE";
 #ifdef SCARD_E_NO_ACCESS
-		case SCARD_E_NO_ACCESS: return "SCARD_E_NO_ACCESS";
+    case SCARD_E_NO_ACCESS: return "SCARD_E_NO_ACCESS";
 #endif
 #ifdef SCARD_E_NO_DIR
-		case SCARD_E_NO_DIR: return "SCARD_E_NO_DIR";
+    case SCARD_E_NO_DIR: return "SCARD_E_NO_DIR";
 #endif
 #ifdef SCARD_E_NO_FILE
-		case SCARD_E_NO_FILE: return "SCARD_E_NO_FILE";
+    case SCARD_E_NO_FILE: return "SCARD_E_NO_FILE";
 #endif
 #ifdef SCARD_E_NO_KEY_CONTAINER
-		case SCARD_E_NO_KEY_CONTAINER: return "SCARD_E_NO_KEY_CONTAINER";
+    case SCARD_E_NO_KEY_CONTAINER: return "SCARD_E_NO_KEY_CONTAINER";
 #endif
-		case SCARD_E_NO_MEMORY: return "SCARD_E_NO_MEMORY";
-		case SCARD_E_NO_READERS_AVAILABLE: return "SCARD_E_NO_READERS_AVAILABLE";
-		case SCARD_E_NO_SERVICE: return "SCARD_E_NO_SERVICE";
-		case SCARD_E_NO_SMARTCARD: return "SCARD_E_NO_SMARTCARD";
+    case SCARD_E_NO_MEMORY: return "SCARD_E_NO_MEMORY";
+    case SCARD_E_NO_READERS_AVAILABLE: return "SCARD_E_NO_READERS_AVAILABLE";
+    case SCARD_E_NO_SERVICE: return "SCARD_E_NO_SERVICE";
+    case SCARD_E_NO_SMARTCARD: return "SCARD_E_NO_SMARTCARD";
 #ifdef SCARD_E_NO_ACCESS
-		case SCARD_E_NO_SUCH_CERTIFICATE: return "SCARD_E_NO_SUCH_CERTIFICATE";
+    case SCARD_E_NO_SUCH_CERTIFICATE: return "SCARD_E_NO_SUCH_CERTIFICATE";
 #endif
-		case SCARD_E_NOT_READY: return "SCARD_E_NOT_READY";
-		case SCARD_E_NOT_TRANSACTED: return "SCARD_E_NOT_TRANSACTED";
-		case SCARD_E_PCI_TOO_SMALL: return "SCARD_E_PCI_TOO_SMALL";
-		case SCARD_E_PROTO_MISMATCH: return "SCARD_E_PROTO_MISMATCH";
-		case SCARD_E_READER_UNAVAILABLE: return "SCARD_E_READER_UNAVAILABLE";
-		case SCARD_E_READER_UNSUPPORTED: return "SCARD_E_READER_UNSUPPORTED";
+    case SCARD_E_NOT_READY: return "SCARD_E_NOT_READY";
+    case SCARD_E_NOT_TRANSACTED: return "SCARD_E_NOT_TRANSACTED";
+    case SCARD_E_PCI_TOO_SMALL: return "SCARD_E_PCI_TOO_SMALL";
+    case SCARD_E_PROTO_MISMATCH: return "SCARD_E_PROTO_MISMATCH";
+    case SCARD_E_READER_UNAVAILABLE: return "SCARD_E_READER_UNAVAILABLE";
+    case SCARD_E_READER_UNSUPPORTED: return "SCARD_E_READER_UNSUPPORTED";
 #ifdef SCARD_E_SERVER_TOO_BUSY
-		case SCARD_E_SERVER_TOO_BUSY: return "SCARD_E_SERVER_TOO_BUSY";
+    case SCARD_E_SERVER_TOO_BUSY: return "SCARD_E_SERVER_TOO_BUSY";
 #endif
-		case SCARD_E_SERVICE_STOPPED: return "SCARD_E_SERVICE_STOPPED";
-		case SCARD_E_SHARING_VIOLATION: return "SCARD_E_SHARING_VIOLATION";
-		case SCARD_E_SYSTEM_CANCELLED: return "SCARD_E_SYSTEM_CANCELLED";
-		case SCARD_E_TIMEOUT: return "SCARD_E_TIMEOUT";
+    case SCARD_E_SERVICE_STOPPED: return "SCARD_E_SERVICE_STOPPED";
+    case SCARD_E_SHARING_VIOLATION: return "SCARD_E_SHARING_VIOLATION";
+    case SCARD_E_SYSTEM_CANCELLED: return "SCARD_E_SYSTEM_CANCELLED";
+    case SCARD_E_TIMEOUT: return "SCARD_E_TIMEOUT";
 #ifdef SCARD_E_UNEXPECTED
-		case SCARD_E_UNEXPECTED: return "SCARD_E_UNEXPECTED";
+    case SCARD_E_UNEXPECTED: return "SCARD_E_UNEXPECTED";
 #endif
-		case SCARD_E_UNKNOWN_CARD: return "SCARD_E_UNKNOWN_CARD";
-		case SCARD_E_UNKNOWN_READER: return "SCARD_E_UNKNOWN_READER";
+    case SCARD_E_UNKNOWN_CARD: return "SCARD_E_UNKNOWN_CARD";
+    case SCARD_E_UNKNOWN_READER: return "SCARD_E_UNKNOWN_READER";
 #ifdef SCARD_E_UNKNOWN_RES_MNG
-		case SCARD_E_UNKNOWN_RES_MNG: return "SCARD_E_UNKNOWN_RES_MNG";
+    case SCARD_E_UNKNOWN_RES_MNG: return "SCARD_E_UNKNOWN_RES_MNG";
 #endif
-/* apparently E_UNEXPECTED and E_UNSUPPORTED are defined 
+/* apparently E_UNEXPECTED and E_UNSUPPORTED are defined
    by a buggy header file on Linux, causing a "double used constant"
    error. Just leave this out on Linux, then.
 */
@@ -367,50 +367,50 @@ static char* php_pcsc_error_to_string(DWORD dwRC) {
                 case SCARD_E_UNSUPPORTED_FEATURE: return "SCARD_E_UNSUPPORTED_FEATURE";
 #endif
 #ifdef SCARD_E_WRITE_TOO_MANY
-		case SCARD_E_WRITE_TOO_MANY: return "SCARD_E_WRITE_TOO_MANY";
+    case SCARD_E_WRITE_TOO_MANY: return "SCARD_E_WRITE_TOO_MANY";
 #endif
-		case SCARD_F_COMM_ERROR: return "SCARD_E_WRITE_TOO_MANY";
-		case SCARD_F_INTERNAL_ERROR: return "SCARD_F_INTERNAL_ERROR";
-		case SCARD_F_UNKNOWN_ERROR: return "SCARD_F_UNKNOWN_ERROR";
-		case SCARD_F_WAITED_TOO_LONG: return "SCARD_F_WAITED_TOO_LONG";
+    case SCARD_F_COMM_ERROR: return "SCARD_E_WRITE_TOO_MANY";
+    case SCARD_F_INTERNAL_ERROR: return "SCARD_F_INTERNAL_ERROR";
+    case SCARD_F_UNKNOWN_ERROR: return "SCARD_F_UNKNOWN_ERROR";
+    case SCARD_F_WAITED_TOO_LONG: return "SCARD_F_WAITED_TOO_LONG";
 #ifdef SCARD_P_SHUTDOWN
-		case SCARD_P_SHUTDOWN: return "SCARD_P_SHUTDOWN";
+    case SCARD_P_SHUTDOWN: return "SCARD_P_SHUTDOWN";
 #endif
-		case SCARD_S_SUCCESS: return "SCARD_S_SUCCESS";
+    case SCARD_S_SUCCESS: return "SCARD_S_SUCCESS";
 #ifdef SCARD_W_CANCELLED_BY_USER
-		case SCARD_W_CANCELLED_BY_USER: return "SCARD_W_CANCELLED_BY_USER";
+    case SCARD_W_CANCELLED_BY_USER: return "SCARD_W_CANCELLED_BY_USER";
 #endif
 #ifdef SCARD_W_CACHE_ITEM_NOT_FOUND
-		case SCARD_W_CACHE_ITEM_NOT_FOUND: return "SCARD_W_CACHE_ITEM_NOT_FOUND";
+    case SCARD_W_CACHE_ITEM_NOT_FOUND: return "SCARD_W_CACHE_ITEM_NOT_FOUND";
 #endif
 #ifdef SCARD_W_CACHE_ITEM_STALE
-		case SCARD_W_CACHE_ITEM_STALE: return "SCARD_W_CACHE_ITEM_STALE";
+    case SCARD_W_CACHE_ITEM_STALE: return "SCARD_W_CACHE_ITEM_STALE";
 #endif
 #ifdef SCARD_W_CACHE_ITEM_TOO_BIG
-		case SCARD_W_CACHE_ITEM_TOO_BIG: return "SCARD_W_CACHE_ITEM_TOO_BIG";
+    case SCARD_W_CACHE_ITEM_TOO_BIG: return "SCARD_W_CACHE_ITEM_TOO_BIG";
 #endif
 #ifdef SCARD_W_CARD_NOT_AUTHENTICATED
-		case SCARD_W_CARD_NOT_AUTHENTICATED: return "SCARD_W_CARD_NOT_AUTHENTICATED";
+    case SCARD_W_CARD_NOT_AUTHENTICATED: return "SCARD_W_CARD_NOT_AUTHENTICATED";
 #endif
 #ifdef SCARD_W_CHV_BLOCKED
-		case SCARD_W_CHV_BLOCKED: return "SCARD_W_CHV_BLOCKED";
+    case SCARD_W_CHV_BLOCKED: return "SCARD_W_CHV_BLOCKED";
 #endif
 #ifdef SCARD_W_EOF
-		case SCARD_W_EOF: return "SCARD_W_EOF";
+    case SCARD_W_EOF: return "SCARD_W_EOF";
 #endif
-		case SCARD_W_REMOVED_CARD: return "SCARD_W_REMOVED_CARD";
-		case SCARD_W_RESET_CARD: return "SCARD_W_RESET_CARD";
+    case SCARD_W_REMOVED_CARD: return "SCARD_W_REMOVED_CARD";
+    case SCARD_W_RESET_CARD: return "SCARD_W_RESET_CARD";
 #ifdef SCARD_W_SECURITY_VIOLATION
-		case SCARD_W_SECURITY_VIOLATION: return "SCARD_W_SECURITY_VIOLATION";
+    case SCARD_W_SECURITY_VIOLATION: return "SCARD_W_SECURITY_VIOLATION";
 #endif
-		case SCARD_W_UNPOWERED_CARD: return "SCARD_W_UNPOWERED_CARD";
-		case SCARD_W_UNRESPONSIVE_CARD: return "SCARD_W_UNRESPONSIVE_CARD";
-		case SCARD_W_UNSUPPORTED_CARD: return "SCARD_W_UNSUPPORTED_CARD";
+    case SCARD_W_UNPOWERED_CARD: return "SCARD_W_UNPOWERED_CARD";
+    case SCARD_W_UNRESPONSIVE_CARD: return "SCARD_W_UNRESPONSIVE_CARD";
+    case SCARD_W_UNSUPPORTED_CARD: return "SCARD_W_UNSUPPORTED_CARD";
 #ifdef SCARD_W_WRONG_CHV
-		case SCARD_W_WRONG_CHV: return "SCARD_W_WRONG_CHV";
+    case SCARD_W_WRONG_CHV: return "SCARD_W_WRONG_CHV";
 #endif
-		default: return "Unknown";
-	}
+    default: return "Unknown";
+  }
 }
 
 static char *e_bytes_to_hex(BYTE *buffer, DWORD length)
@@ -453,15 +453,15 @@ static BYTE *e_hex_to_bytes(char *str, DWORD *length)
   DWORD i, l;
   BYTE *buf;
 
-  if (str == NULL) { 
+  if (str == NULL) {
     return NULL;
   }
-  
+
   l = strlen(str) / 2;
   if (length != NULL) {
     *length = l;
   }
-  
+
   buf = emalloc(l);
 
   for (i = 0; i < l; i++) {
@@ -484,10 +484,10 @@ PHP_FUNCTION(scard_establish_context)
   rc = SCardEstablishContext(SCARD_SCOPE_SYSTEM, NULL, NULL, &scard_context);
   if (rc != SCARD_S_SUCCESS)
   {
-	PCSC_G(last_errno) = rc;
+  PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
-  
+
   RETURN_RES(zend_register_resource((void*)scard_context,le_pcsc_ctx_res));
 }
 /* }}} */
@@ -499,15 +499,15 @@ PHP_FUNCTION(scard_is_valid_context)
   LONG rc = 0;
   zval* ctx_res;
   SCARDCONTEXT context;
-  
+
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "r", &ctx_res) == FAILURE) {
     RETURN_NULL();
   }
   ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
-  
+
   rc = SCardIsValidContext(context);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno) = rc;
+  PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
   RETURN_TRUE;
@@ -520,7 +520,7 @@ PHP_FUNCTION(scard_release_context)
 {
   zval* ctx_res;
   SCARDCONTEXT context;
-  
+
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "r", &ctx_res) == FAILURE) {
     RETURN_NULL();
   }
@@ -542,22 +542,22 @@ PHP_FUNCTION(scard_list_readers)
   LONG rc = 0;
   zval* ctx_res;
   SCARDCONTEXT context;
-  
+
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "r", &ctx_res) == FAILURE) {
     RETURN_NULL();
   }
   ZEND_FETCH_RESOURCE(context, SCARDCONTEXT, &ctx_res, -1, PHP_PCSC_CTX_RES_NAME, le_pcsc_ctx_res);
-  
+
   rc = SCardListReaders(context, NULL, (char *) &strReaders, &dwLen);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno) = rc;
+  PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
-  
+
   if (strReaders == NULL) {
     RETURN_FALSE;
   }
-  
+
   array_init(return_value);
 
   ptrReader = strReaders;
@@ -566,7 +566,7 @@ PHP_FUNCTION(scard_list_readers)
     ptrReader+= strlen(ptrReader);
     ptrReader++;
   } while (*ptrReader != '\0');
-  
+
   SCardFreeMemory(context, strReaders);
 }
 /* }}} */
@@ -575,7 +575,7 @@ PHP_FUNCTION(scard_list_readers)
    Return a handle to the card */
 PHP_FUNCTION(scard_connect)
 {
-  DWORD dwPreferredProtocol = SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1;
+  DWORD dwPreferredProtocol = SCARD_PROTOCOL_RAW | SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1;
   DWORD dwCurrentProtocol;
   SCARDHANDLE hCard = 0;
   LONG rc = 0;
@@ -585,7 +585,7 @@ PHP_FUNCTION(scard_connect)
   char *strReaderName;
   size_t strReaderNameLen;
   zend_long preferred_protocol;
-  
+
   current_protocol = NULL;
   ctx_res = NULL;
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "rs|lz", &ctx_res, &strReaderName, &strReaderNameLen, &preferred_protocol, &current_protocol) == FAILURE) {
@@ -602,13 +602,13 @@ PHP_FUNCTION(scard_connect)
 
   rc = SCardConnect(context, strReaderName, SCARD_SHARE_SHARED, dwPreferredProtocol, &hCard, &dwCurrentProtocol);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno) = rc;
+  PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
   if (current_protocol != NULL) {
     ZVAL_LONG(current_protocol, dwCurrentProtocol);
   }
-  
+
   RETURN_RES(zend_register_resource((void*)hCard, le_pcsc_conn_res));
 }
 /* }}} */
@@ -621,15 +621,15 @@ PHP_FUNCTION(scard_disconnect)
   LONG rc;
   zval* conn_res;
   SCARDHANDLE hCard;
-  
+
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "r|l", &conn_res, &dwDisposition) == FAILURE) {
     return;
   }
   ZEND_FETCH_RESOURCE(hCard, SCARDHANDLE, &conn_res, -1, PHP_PCSC_CONN_RES_NAME, le_pcsc_conn_res);
-  
+
   rc = SCardDisconnect(hCard, (DWORD)dwDisposition);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno) = rc;
+  PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
   RETURN_TRUE;
@@ -652,7 +652,7 @@ PHP_FUNCTION(scard_transmit)
   LONG rc;
   char *apdu;
   size_t apduLen;
-  
+
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "rs", &conn_res, &apdu, &apduLen) == FAILURE) {
     return;
   }
@@ -661,15 +661,15 @@ PHP_FUNCTION(scard_transmit)
   /* Are we in T=0 or T=1 ? Is the card powered? */
   rc = SCardStatus(hCard, NULL, NULL, &dwState, &dwProtocol, NULL, NULL);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno) = rc;
+  PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
-        
+
   if (!(dwState & SCARD_POWERED)) {
-	PCSC_G(last_errno) = SCARD_W_UNPOWERED_CARD;
+  PCSC_G(last_errno) = SCARD_W_UNPOWERED_CARD;
     RETURN_FALSE;
   }
-  
+
   switch (dwProtocol) {
     case SCARD_PROTOCOL_RAW : sendPci = SCARD_PCI_RAW; break;
     case SCARD_PROTOCOL_T0  : sendPci = SCARD_PCI_T0;  break;
@@ -690,7 +690,7 @@ PHP_FUNCTION(scard_transmit)
 
   rc = SCardTransmit(hCard, sendPci, sendBuffer, sendLen, recvPci, recvBuffer, &recvLen);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno) = rc;
+  PCSC_G(last_errno) = rc;
     efree(recvPci);
     efree(recvBuffer);
     efree(sendBuffer);
@@ -717,16 +717,16 @@ PHP_FUNCTION(scard_status)
   BYTE atrBuffer[32];
   DWORD atrLen;
   LONG rc;
-  
+
   if (zend_parse_parameters(ZEND_NUM_ARGS(), "r", &conn_res) == FAILURE) {
     return;
   }
   ZEND_FETCH_RESOURCE(hCard, SCARDHANDLE, &conn_res, -1, PHP_PCSC_CONN_RES_NAME, le_pcsc_conn_res);
-  
+
   atrLen = sizeof(atrBuffer);
   rc = SCardStatus(hCard, NULL, NULL, &dwState, &dwProtocol, atrBuffer, &atrLen);
   if (rc != SCARD_S_SUCCESS) {
-	PCSC_G(last_errno) = rc;
+  PCSC_G(last_errno) = rc;
     RETURN_FALSE;
   }
 
@@ -751,7 +751,6 @@ PHP_FUNCTION(scard_status)
     add_assoc_long(return_value, "SCARD_SPECIFIC", 1);
 
   switch (dwProtocol) {
-    /* Maybe change to bool type here instead of add_assoc_long...? */
     case SCARD_PROTOCOL_RAW : add_assoc_long(return_value, "SCARD_PROTOCOL_RAW", 1);
                               add_assoc_string(return_value, "PROTOCOL", "RAW");
                               break;
@@ -780,7 +779,7 @@ PHP_FUNCTION(scard_last_errno)
     if (zend_parse_parameters_none() == FAILURE) {
       return;
     }
-	RETURN_LONG(PCSC_G(last_errno));
+  RETURN_LONG(PCSC_G(last_errno));
 }
 /* }}} */
 
