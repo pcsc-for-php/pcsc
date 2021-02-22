@@ -35,7 +35,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <contents>
   <dir name="/">
    <file name="COPYING" role="doc" />
-   <file name="CREDITS.md" role="doc" />
    <file name="config.m4" role="src" />
    <file name="config.w32" role="src" />
    <file name="pcsc.c" role="src" />
@@ -44,7 +43,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <file name="pcsc_arginfo.h" role="src" />
    <file name="pcsc_legacy_arginfo.h" role="src" />
    <file name="README.md" role="doc" />
-   <file name="TODO.md" role="doc" />
   </dir> <!-- / -->
  </contents>
  <dependencies>

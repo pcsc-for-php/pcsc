@@ -176,9 +176,43 @@ array(7) {
 
 Returns the response $apdu as string or FALSE.
 
+# To do:
+
+There is some stuff to do. Some things are important but some are not.
+
+## Implement important missing PC/SC functions and write documentation:
+
+ * SCardBeginTransaction()
+ * SCardEndTransaction()
+ * SCardControl()
+ * SCardGetStatusChange()
+ * Write complete API documentation
+
+## Implement less important missing PC/SC functions:
+
+ * SCardGetAttrib()
+ * SCardSetAttrib()
+ * SCardListReaderGroups()
+ * SCardReconnect()
+
+## Goal:
+
+Completely implement the full API from [PC/SC API from PCSC-Lite](https://pcsclite.apdu.fr/api/group__API.html)
+
 ## License
 
 This code is licensed under the terms of the PHP License version 3.01. PCSC-Lite is licensed in a way where it is possible to integrate it native in the PHP environment.
+
+# Credits
+
+This extension was originally written in 2005 by Johann Dantant. In 2011 Johannes Findeisen took his code and updated it to work with the current PHP version. Johannes maintains the code to this day, but there have been some contributions from other people in the past. All people who have worked on extending or porting the "pcsc" extension are listed below in alphabetical order by their last name. Thanks to all!
+
+ * Anatol Belski (Contributor)
+ * Calvin Buckley (Contributor)
+ * Remi Collet (Contributor)
+ * Johann Dantant (Original author)
+ * Johannes Findeisen (Maintainer)
+ * Marco Schuster (Contributor)
 
 ## Links
 
@@ -186,7 +220,7 @@ This code is licensed under the terms of the PHP License version 3.01. PCSC-Lite
  * [PC/SC Worgroup](http://www.pcscworkgroup.com/) - Homepage and definition file downloads
  * [PC/SC](http://en.wikipedia.org/wiki/PC/SC) - PC/SC at Wikipedia
  * [PC/SC-Lite](https://pcsclite.apdu.fr/) - The free and open implementation of the PC/SC SCard API for UNIX
+ * [PC/SC API from PCSC-Lite](https://pcsclite.apdu.fr/api/group__API.html) - Documentation of the PCSC-Lite API
  * [PCSC sample in PHP5](http://ludovicrousseau.blogspot.de/2015/01/pcsc-sample-in-php5.html) - Ludovic Rousseau about "PC/SC for PHP"
- * [winscard.h header](https://docs.microsoft.com/en-us/windows/win32/api/winscard/) - Microsoft Docs
- * [PC/SC API from PCSC-Lite](https://pcsclite.apdu.fr/api/group__API.html)
+ * [winscard.h header](https://docs.microsoft.com/en-us/windows/win32/api/winscard/) - Microsoft Documentation
 
