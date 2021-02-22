@@ -207,11 +207,11 @@ This code is licensed under the terms of the PHP License version 3.01. PCSC-Lite
 
 This extension was originally written in 2005 by Johann Dantant. In 2011 Johannes Findeisen took his code and updated it to work with the current PHP version. Johannes maintains the code to this day, but there have been some contributions from other people in the past. All people who have worked on extending or porting the "pcsc" extension are listed below in alphabetical order by their last name. Thanks to all!
 
- * Anatol Belski (Contributor)
- * Calvin Buckley (Contributor)
- * Remi Collet (Contributor)
+ * [Anatol Belski](https://github.com/weltling) (Contributor)
+ * [Calvin Buckley](https://github.com/NattyNarwhal) (Contributor)
+ * [Remi Collet](https://github.com/remicollet) (Contributor)
  * Johann Dantant (Original author)
- * Johannes Findeisen (Maintainer)
+ * [Johannes Findeisen](https://github.com/hanez) (Maintainer)
  * Marco Schuster (Contributor)
 
 ## Links
