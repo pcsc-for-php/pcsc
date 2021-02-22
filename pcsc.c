@@ -636,6 +636,48 @@ PHP_FUNCTION(scard_disconnect)
 }
 /* }}} */
 
+/* {{{ proto boolean scard_begin_transaction(resource card_handle)
+   Begin transaction on a card connection obtained with scard_connect */
+PHP_FUNCTION(scard_begin_transaction)
+{
+  LONG rc;
+  zval* conn_res;
+  SCARDHANDLE hCard;
+
+  ZEND_FETCH_RESOURCE(hCard, SCARDHANDLE, &conn_res, -1, PHP_PCSC_CONN_RES_NAME, le_pcsc_conn_res);
+
+  rc = SCardBeginTransaction(hCard);
+  if (rc != SCARD_S_SUCCESS) {
+  PCSC_G(last_errno) = rc;
+    RETURN_FALSE;
+  }
+  RETURN_TRUE;
+}
+/* }}} */
+
+/* {{{ proto boolean scard_end_transaction(resource card_handle, [long disposition = SCARD_LEAVE_CARD])
+   End a previously begun transaction invoked by scard_begin_transaction on a card connection obtained with scard_connect; If no transaction began, do nothing. */
+PHP_FUNCTION(scard_end_transaction)
+{
+  zend_long dwDisposition = SCARD_LEAVE_CARD;
+  LONG rc;
+  zval* conn_res;
+  SCARDHANDLE hCard;
+
+  if (zend_parse_parameters(ZEND_NUM_ARGS(), "r|l", &conn_res, &dwDisposition) == FAILURE) {
+    return;
+  }
+  ZEND_FETCH_RESOURCE(hCard, SCARDHANDLE, &conn_res, -1, PHP_PCSC_CONN_RES_NAME, le_pcsc_conn_res);
+
+  rc = SCardEndTransaction(hCard, (DWORD)dwDisposition);
+  if (rc != SCARD_S_SUCCESS) {
+  PCSC_G(last_errno) = rc;
+    RETURN_FALSE;
+  }
+  RETURN_TRUE;
+}
+/* }}} */
+
 /* {{{ proto string scard_transmit(resource card_handle, string send_command)
    Transmit (and receive) data to (and from) the card */
 PHP_FUNCTION(scard_transmit)

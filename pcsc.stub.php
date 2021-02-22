@@ -41,6 +41,18 @@ function scard_disconnect($card, int $disposition=SCARD_EJECT_CARD): bool {}
  * @param resource $card
  * @return resource|false
  */
+function scard_begin_transaction($card): bool {}
+
+/**
+ * @param resource $card
+ * @return resource|false
+ */
+function scard_end_transaction($card, int $disposition=SCARD_LEAVE_CARD): bool {}
+
+/**
+ * @param resource $card
+ * @return resource|false
+ */
 function scard_transmit($card, string $command): string|false {}
 
 /**

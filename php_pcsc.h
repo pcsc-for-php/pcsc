@@ -4,7 +4,7 @@
 extern zend_module_entry pcsc_module_entry;
 #define phpext_pcsc_ptr &pcsc_module_entry
 
-#define PHP_PCSC_VERSION "0.5.1"
+#define PHP_PCSC_VERSION "0.6.0"
 
 #ifdef PHP_WIN32
 #define PHP_PCSC_API __declspec(dllexport)
@@ -32,6 +32,8 @@ PHP_FUNCTION(scard_list_readers);
 PHP_FUNCTION(scard_connect);
 //PHP_FUNCTION(scard_reconnect);
 PHP_FUNCTION(scard_disconnect);
+PHP_FUNCTION(scard_begin_transaction);
+PHP_FUNCTION(scard_end_transaction);
 PHP_FUNCTION(scard_status);
 //PHP_FUNCTION(scard_get_status_change);
 PHP_FUNCTION(scard_transmit);
