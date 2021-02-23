@@ -39,8 +39,8 @@ echo "\n";
 
 # Connect to the card
 echo ">> Connect to Card\n";
-$connection = scard_connect($context, $reader, 1);
-var_dump($connection);
+ $card  = scard_connect($context, $reader, 2);
+var_dump( $card );
 
 $errno = scard_last_errno();
 var_dump($errno);
@@ -50,7 +50,7 @@ echo "\n";
 
 # Begin Transaction
 echo ">> Begin Transaction\n";
-$begin= scard_begin_transaction($connection);
+$begin= scard_begin_transaction($card);
 var_dump($begin);
 
 $errno = scard_last_errno();
@@ -61,8 +61,8 @@ echo "\n";
 
 # Select Applet APDU
 echo ">> Select Applet\n";
-$CMD = "00a4040c0cD2760001354B414E4D30310000";
-$res = scard_transmit($connection, $CMD);
+$apdu = "00a4040c0cD2760001354B414E4D30310000";
+$res = scard_transmit($card , $apdu);
 var_dump($res);
 
 $errno = scard_last_errno();
@@ -73,8 +73,8 @@ echo "\n";
 
 # test APDU
 echo ">> Send APDU\n";
-$CMD = "0084000008";
-$res = scard_transmit($connection, $CMD);
+$apdu = "0084000008";
+$res = scard_transmit($card, $apdu);
 var_dump($res);
 #echo pack("H*", $res), "\n";
 
@@ -86,8 +86,8 @@ echo "\n";
 
 # End Transaction
 echo ">> End Transaction\n";
-$begin= scard_end_transaction($connection);
-var_dump($connection);
+$begin= scard_end_transaction($card);
+var_dump( $card );
 
 $errno = scard_last_errno();
 var_dump($errno);
@@ -97,7 +97,7 @@ echo "\n";
 
 # Show Status
 echo ">> Show Status\n";
-$status = scard_status($connection);
+$status = scard_status($card);
 var_dump($status);
 
 $errno = scard_last_errno();
