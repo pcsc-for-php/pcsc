@@ -211,6 +211,7 @@ This extension was originally written in 2005 by Johann Dantant. In 2011 Johanne
  * [Calvin Buckley](https://github.com/NattyNarwhal) (Contributor)
  * [Remi Collet](https://github.com/remicollet) (Contributor)
  * Johann Dantant (Original author)
+ * [Jan Ehrhardt](https://github.com/Jan-E) (Contributor)
  * [Johannes Findeisen](https://github.com/hanez) (Maintainer)
  * Marco Schuster (Contributor)
 
