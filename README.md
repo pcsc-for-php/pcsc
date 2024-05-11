@@ -222,6 +222,6 @@ This extension was originally written in 2005 by Johann Dantant. In 2011 Johanne
  * [PC/SC](http://en.wikipedia.org/wiki/PC/SC) - PC/SC at Wikipedia
  * [PC/SC-Lite](https://pcsclite.apdu.fr/) - The free and open implementation of the PC/SC SCard API for UNIX
  * [PC/SC API from PCSC-Lite](https://pcsclite.apdu.fr/api/group__API.html) - Documentation of the PCSC-Lite API
- * [PCSC sample in PHP5](http://ludovicrousseau.blogspot.de/2015/01/pcsc-sample-in-php5.html) - Ludovic Rousseau about "PC/SC for PHP"
+ * [PCSC sample in PHP5](https://blog.apdu.fr/posts/2015/01/pcsc-sample-in-php5/) - Ludovic Rousseau about "PC/SC for PHP"
  * [winscard.h header](https://docs.microsoft.com/en-us/windows/win32/api/winscard/) - Microsoft Documentation
 
